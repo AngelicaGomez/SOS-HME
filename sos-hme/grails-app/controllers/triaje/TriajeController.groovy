@@ -1,18 +1,22 @@
 package triaje
 import webService.PojoPrueba
+
 import webService.PojoEspecialidad
 import webService.PojoPaciente
 import webService.PojoArchivo
 import webService.PojoCaso
+
 
 class TriajeController {
 
     def customSecureServiceClientTriaje
     def index = {
         
+
 //       PojoPrueba arg = customSecureServiceClientTriaje.serviceHolaMundo() 
 //        
 //        render arg.nombre + " "+ arg.edad
+
         
        PojoEspecialidad especialidad1 = new PojoEspecialidad()
             especialidad1.setNombre("Dermatologia")

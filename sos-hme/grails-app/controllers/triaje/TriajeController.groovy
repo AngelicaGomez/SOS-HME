@@ -55,7 +55,7 @@ class TriajeController {
 //            caso.setFechaInicio() //se coloca cuando llega a triaje
 //            caso.setFechaSolucion() //se coloca cuando sale de triaje
 
-        String uuid = "c99338f6-1221-4bc1-a4ea-243eff0b4167"
+        String uuid = "312f2a79-7b4d-4d0b-ae27-b62badb622cc"
         
         boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
         
@@ -65,7 +65,10 @@ class TriajeController {
             render "ACCESO DENEGADO"
         }
 
-        
+//        def idCasosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
+//        idCasosCerrados.each{
+//            render "Caso numero "+it+" cerrado"
+//        }
             
     }
 }

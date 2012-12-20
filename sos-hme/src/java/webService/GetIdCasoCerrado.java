@@ -3,21 +3,20 @@ package webService;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para servicioPruebaSosHMEResponse complex type.
+ * <p>Clase Java para getIdCasoCerrado complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="servicioPruebaSosHMEResponse">
+ * &lt;complexType name="getIdCasoCerrado">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="uuid" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,36 +26,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "servicioPruebaSosHMEResponse", namespace = "http://triaje/", propOrder = {
-    "_return"
+@XmlType(name = "getIdCasoCerrado", propOrder = {
+    "uuid"
 })
-public class ServicioPruebaSosHMEResponse {
+public class GetIdCasoCerrado {
 
-    @XmlElement(name = "return")
-    protected String _return;
+    protected String uuid;
 
     /**
-     * Obtiene el valor de la propiedad return.
+     * Obtiene el valor de la propiedad uuid.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getReturn() {
-        return _return;
+    public String getUuid() {
+        return uuid;
     }
 
     /**
-     * Define el valor de la propiedad return.
+     * Define el valor de la propiedad uuid.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setReturn(String value) {
-        this._return = value;
+    public void setUuid(String value) {
+        this.uuid = value;
     }
 
 }

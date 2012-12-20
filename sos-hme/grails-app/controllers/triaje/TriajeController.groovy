@@ -64,11 +64,5 @@ class TriajeController {
         }else{
             render "ACCESO DENEGADO"
         }
-
-//        def idCasosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
-//        idCasosCerrados.each{
-//            render "Caso numero "+it+" cerrado"
-//        }
-            
     }
 }

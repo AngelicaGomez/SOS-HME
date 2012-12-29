@@ -45,8 +45,6 @@ class TriajeController {
             caso.especialidad = especialidades
             caso.setPaciente(paciente)
             caso.setDescripcion("Desc. Caso de prueba enviado desde SOS-HME")
-//            caso.setFechaInicio() //se coloca cuando llega a triaje
-//            caso.setFechaSolucion() //se coloca cuando sale de triaje
 
         String uuid = "312f2a79-7b4d-4d0b-ae27-b62badb622cc"
         

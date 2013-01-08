@@ -24,10 +24,12 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GetEspecialidadesResponse_QNAME = new QName("http://webService/", "getEspecialidadesResponse");
     private final static QName _GetIdCasoCerrado_QNAME = new QName("http://webService/", "getIdCasoCerrado");
     private final static QName _ServicioPruebaSosHMEResponse_QNAME = new QName("http://triaje/", "servicioPruebaSosHMEResponse");
     private final static QName _EnviarCasoTriaje_QNAME = new QName("http://webService/", "enviarCasoTriaje");
     private final static QName _EnviarCasoTriajeResponse_QNAME = new QName("http://webService/", "enviarCasoTriajeResponse");
+    private final static QName _GetEspecialidades_QNAME = new QName("http://webService/", "getEspecialidades");
     private final static QName _ServicioPruebaSosHME_QNAME = new QName("http://triaje/", "servicioPruebaSosHME");
     private final static QName _GetCasoResuelto_QNAME = new QName("http://webService/", "getCasoResuelto");
     private final static QName _GetIdCasoCerradoResponse_QNAME = new QName("http://webService/", "getIdCasoCerradoResponse");
@@ -99,11 +101,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetEspecialidadesResponse }
+     * 
+     */
+    public GetEspecialidadesResponse createGetEspecialidadesResponse() {
+        return new GetEspecialidadesResponse();
+    }
+
+    /**
      * Create an instance of {@link GetCasoResuelto }
      * 
      */
     public GetCasoResuelto createGetCasoResuelto() {
         return new GetCasoResuelto();
+    }
+
+    /**
+     * Create an instance of {@link GetEspecialidades }
+     * 
+     */
+    public GetEspecialidades createGetEspecialidades() {
+        return new GetEspecialidades();
     }
 
     /**
@@ -171,6 +189,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetEspecialidadesResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getEspecialidadesResponse")
+    public JAXBElement<GetEspecialidadesResponse> createGetEspecialidadesResponse(GetEspecialidadesResponse value) {
+        return new JAXBElement<GetEspecialidadesResponse>(_GetEspecialidadesResponse_QNAME, GetEspecialidadesResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetIdCasoCerrado }{@code >}}
      * 
      */
@@ -204,6 +231,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriajeResponse")
     public JAXBElement<EnviarCasoTriajeResponse> createEnviarCasoTriajeResponse(EnviarCasoTriajeResponse value) {
         return new JAXBElement<EnviarCasoTriajeResponse>(_EnviarCasoTriajeResponse_QNAME, EnviarCasoTriajeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetEspecialidades }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getEspecialidades")
+    public JAXBElement<GetEspecialidades> createGetEspecialidades(GetEspecialidades value) {
+        return new JAXBElement<GetEspecialidades>(_GetEspecialidades_QNAME, GetEspecialidades.class, null, value);
     }
 
     /**

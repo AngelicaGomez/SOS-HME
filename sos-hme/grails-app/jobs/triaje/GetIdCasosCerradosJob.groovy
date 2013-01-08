@@ -9,7 +9,7 @@ class GetIdCasosCerradosJob {
       simple name:'getIdCasosCerrados', startDelay:2000, repeatInterval: 60000//cada 1 minuto
     }
 
-//    static List<String> casosLeidos
+//    def triajeService
     def customSecureServiceClientTriaje
     public PojoCasoResuelto thisCasoResuelto
     public PojoMedico thisResponsable
@@ -17,25 +17,25 @@ class GetIdCasosCerradosJob {
     def execute() {
         String uuid = "312f2a79-7b4d-4d0b-ae27-b62badb622cc"
 
-        List<String> CasosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
+        List<String> casosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
          
-            if(CasosCerrados){
-                CasosCerrados.each{
-//                    casosLeidos.add(it)                    
-                
-                        println "CASO TRAMITADO CORRECTAMENTE: "+it
-                        this.thisCasoResuelto = customSecureServiceClientTriaje.getCasoResuelto(it)
-                        println "paso 1"
+        if(casosCerrados){
+              casosCerrados.each{
+                  
+                    println "CASO TRAMITADO CORRECTAMENTE: "+it
+                    this.thisCasoResuelto = customSecureServiceClientTriaje.getCasoResuelto(it)
+                    println "paso 1"
 
-                        this.thisResponsable = thisCasoResuelto.responsable
+                    this.thisResponsable = thisCasoResuelto.responsable
 
-                        println "DETALLE DEL CASO: "
-                        println "CASO: "+thisCasoResuelto.idCasoSOS
-                        println "MEDICO RESPONSABLE: "+thisResponsable.nombre+" "+thisResponsable.apellido
-                        println "SOLUCION AL CASO: "+thisCasoResuelto.opinion
-                        println "FECHA DE SOLUCION: "+thisCasoResuelto.fechaSolucion
-                    
-                }        
-            }
+                    println "DETALLE DEL CASO: "
+                    println "CASO: "+thisCasoResuelto.idCasoSOS
+                    println "MEDICO RESPONSABLE: "+thisResponsable.nombre+" "+thisResponsable.apellido
+                    println "SOLUCION AL CASO: "+thisCasoResuelto.opinion
+                    println "FECHA DE SOLUCION: "+thisCasoResuelto.fechaSolucion
+
+                } 
+       }
+            
     }
 }

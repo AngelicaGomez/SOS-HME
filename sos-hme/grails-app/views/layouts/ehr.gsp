@@ -44,6 +44,14 @@
   
   <script type="text/javascript">
    
+//--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>   
+     //function enviarCasoSosTriaje(){
+   
+         //  $(location).attr('href',"${createLink(controller:'triaje')}");
+       // return;
+     // }
+//--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>      
+      
     // 'modificado' establece si los valores de la seccion han sido modificados
     var modificado = false;
     // 'secc' establece seccion actual
@@ -582,18 +590,31 @@
                     </li>
 					</div>
                   </g:else>
-                  
-
-
+                  <br />
                 </g:canFillClinicalRecord>
+                
+                        <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>
+                         <li>                           
+                           <a href="${createLink(controller: 'triaje', action: 'enviarCaso', id:episodeId)}">
+                             <g:message code="Enviar a SOS-TRIAJE" />
+                           </a>
+                            <%--
+                           <a href="#" onclick="enviarCasoSosTriaje();">
+                             <g:message code="Enviar a SOS-TRIAJE" />
+                           </a>--%>
+                         </li>
+                         
+                         <li>                           
+                           <a href="${createLink(controller: 'triaje', action: 'mostrarEspecialidades', id:episodeId)}">
+                             <g:message code="Especialidades" />
+                           </a>
+                         </li>
+                        <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>
+                        
               </ul>
-            </div>
-           
-  
-           
+            </div>           
       <g:layoutBody />
      <p style="clear:both"> </p>
-  
 </div>
 
   <div id="footer" class="footercontenido">

@@ -104,13 +104,13 @@ def customSecureServiceClientImpFactory
         println " - START: Carga tablas maestras"
         
         // saco para acelerar la carga
-        /*
+        
         println "   - CIE 10..."
         def codigos = Cie10Trauma.getCodigos()
         codigos.each { codigo ->
            if (!codigo.save()) println codigo.errors
         }
-        */
+        
         
         
         println "   - OpenEHR Concepts..."
@@ -215,7 +215,7 @@ def customSecureServiceClientImpFactory
         
         
        // Data inicial
-       /*
+       
      
         println " - Datos Iniciales Tablas Demograficas"
         
@@ -251,7 +251,7 @@ def customSecureServiceClientImpFactory
         String sqlFilePathEtnia = ApplicationHolder.application.parentContext.servletContext.getRealPath("/data/etnia.sql")
         String sqlStringEtnia = new File(sqlFilePathEtnia).eachLine {
             sql.execute(it)
-        }*/
+        }
     
         //NOMBRE Y DIRECCION DEL CENTRO AMBULATORIO
         

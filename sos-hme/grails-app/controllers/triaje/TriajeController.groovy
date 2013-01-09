@@ -24,15 +24,7 @@ class TriajeController {
     }
     
     def mostrarEspecialidades = {
-       /*  //Con wsdl 18
-        boolean answer2 = customSecureServiceClientTriaje.getEspecialidades(uuid)
-        if (answer2==true){
-            println "SI hay especialicades"
-        }else{
-            println "NO hay especialicades" 
-        }
-        */
-       
+      
         def composition = Composition.get(session.traumaContext?.episodioId)        
         
         def patient = hceService.getPatientFromComposition( composition )

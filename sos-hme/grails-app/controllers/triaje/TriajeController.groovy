@@ -24,20 +24,24 @@ class TriajeController {
     }
     
     def mostrarEspecialidades = {
-      
+        def generarReporte = false
+        def rmNode
         def composition = Composition.get(session.traumaContext?.episodioId)        
         
         def patient = hceService.getPatientFromComposition( composition )
         
-        /*
+        
         def archetypeIdP
         def templateIdP
-        
-       
+//        def archetype
+//        
+//                    archetype = composition.content
+//                    println "arquetype: "+archetype
                     int i=0;
                     while (i< composition.content.size())
                     {
                         println "ContenItem: "+composition.content.get(2)
+           
 //                        archetypeDetalles = composition.content.get(2).archetypeDetails
                         println "Detalles: "+composition.content.get(2).archetypeDetails
                         println "Nombre: "+composition.content.get(2).name
@@ -49,10 +53,10 @@ class TriajeController {
                         println "rmVersion: "+composition.content.get(2).archetypeDetails.rmVersion
                         i++;
                     }
-                    */
+                    
   
     
-//        def archetypeInstance = ArchetypeManager.getInstance().getArchetype( archetypeIdP )
+        def archetypeInstance = ArchetypeManager.getInstance().getArchetype( archetypeIdP )
 //        println " archetypeInstance: "+archetypeInstance
 //        def templateInstance = TemplateManager.getInstance().getTemplate( templateIdP )        
 //        println " templateInstance: "+templateInstance        
@@ -63,7 +67,94 @@ class TriajeController {
         
         def item = hceService.getCompositionContentItemForTemplate( comp, templateId )
         
-        def rmNode = Locatable.get(item.id)
+        if (item != null){
+            rmNode =  Locatable.findByName(item.name) //enlace al nodo de la composition en el modelo de referencia   
+            def rmNodeData =  rmNode.data            
+//            println "rmNodeData: "+rmNodeData
+            def rmNodeDataEvents = rmNodeData.events
+//            println "rmNodeDataEvents: "+rmNodeDataEvents
+//            println "otra forma rmNode.data.events: "+rmNode.data.events
+            
+            
+//            println "rmNodeDataEvents.data: "+rmNodeDataEvents[0].data
+//            println "rmNodeDataEvents.data.items: "+rmNodeDataEvents[0].data.items
+//            println "rmNodeDataEvents.data.items.items: "+rmNodeDataEvents[0].data.items.items
+//            println "rmNodeDataEvents.data.items.items.items: "+rmNodeDataEvents[0].data.items.items[0].items[0]  //TODOS LOS ELEMENTOS QUE COMPONEN A LA ENFERMEDAD ACTUAL
+            
+            
+            
+//            def element = rmNodeDataEvents[0].data.items
+//            println "elementos: "+element
+//            def element2 = rmNodeDataEvents[0].data.items.items[0]
+//            println "elementos 2: "+element2
+//            def element3 = rmNodeDataEvents[0].data.items.items.value[0]
+//            println "elementos 3: "+element3
+            def j=0
+            def k=0 // variable de ciclo, usada en caso de que la composition tenga varios 
+            def codigos = []
+            def codigo//rmNode.name.value
+//            println "elementos posicion k: "+element2[k]
+//            println "Nombre: "+element2[k].name.value
+
+            def element = rmNodeDataEvents[0].data.items.items[0].items
+            println "ELEMENTOS: "+element[k]
+            println "ELEMENTOS: "+element[k][j]
+                while(element[k]!=null){    
+                   while(element[k][j]!=null){
+//                   println "elemento 1: "+element[j]
+                    if(element[k][j].name.value=="Sintoma"){
+                        println "---- SINTOMAS DE ENFERMEDAD ACTUAL: ----" 
+                        println "Sinstomas: "+element[k][j].name.value
+                    }
+                    if(element[k][j].name.value=="Aparición"){ 
+                        println "---- APARICION DE ENFERMEDAD ACTUAL: ----" 
+                        println "Aparición: "+element[k][j].name.value
+                    }
+                    if(element[k][j].name.value=="Localización"){ 
+                        println "---- LOCALIZACION DE ENFERMEDAD ACTUAL: ----"    
+                        println "Localización: "+element[k][j].name.value               
+                    }  
+                    if(element[k][j].name.value=="Intensidad"){ 
+                        println "---- INTENSIDAD DE ENFERMEDAD ACTUAL: ----" 
+                        println "Intensidad: "+element[k][j].name.value                  
+                    }
+                    if(element[k][j].name.value=="Carácter"){ 
+                        println "---- CARACTER DE ENFERMEDAD ACTUAL: ----"   
+                        println "Carácter: "+element[k][j].name.value                
+                    }      
+                    if(element[k][j].name.value=="Concomitantes"){ 
+                        println "---- CONCOMITANTES DE ENFERMEDAD ACTUAL: ----" 
+                        println "Concomitantes: "+element[k][j].name.value                  
+                    }
+                    if(element[k][j].name.value=="Alivio"){ 
+                        println "---- ALIVIO DE ENFERMEDAD ACTUAL: ----"     
+                        println "Alivio: "+element[k][j].name.value              
+                    }        
+                    if(element[k][j].name.value=="Agravantes"){ 
+                        println "---- AGRAVANTES DE ENFERMEDAD ACTUAL: ----"  
+                        println "Agravantes: "+element[k][j].name.value //                                         
+                    }
+                    if(element[k][j].name.value=="Desencadenantes"){ 
+                        println "---- DESENCADENANTES DE ENFERMEDAD ACTUAL: ----" 
+                        println "Desencadenantes: "+element[k][j].name.value                  
+                    }      
+                    if(element[k][j].name.value=="Duración"){ 
+                        println "---- DURACION DE ENFERMEDAD ACTUAL: ----"   
+                        println "Duración: "+element[k][j].name.value                
+                    }
+                    if(element[k][j].name.value=="Frecuencia"){ 
+                        println "---- FRECUENCIA DE ENFERMEDAD ACTUAL: ----" 
+                        println "Frecuencia: "+element[k][j].name.value                  
+                    }  
+                    if(element[k][j].name.value=="Color"){ 
+                        println "---- COLOR DE ENFERMEDAD ACTUAL: ----"  
+                        println "Color: "+element[k][j].name.value                 
+                    }
+                    j++
+                        }
+                    k++
+                }      
+        }
         /*
         if (item)
         {
@@ -84,7 +175,7 @@ class TriajeController {
             println "especialidad nombre: "+it
         }
             
-        render(view:"showEnvio2",model:[message:"Especilidades obtenidas con exito", rmNode:rmNode, id:params.id, esp:especialidadList, patient:patient, comp:composition/*, archetype:archetypeInstance , template:templateInstance, idPaciente: patient.id, persona:persona, compositions: rangoCompos*/])        
+        render(view:"showEnvio2",model:[message:"Especilidades obtenidas con exito", rmNode:rmNode, id:params.id, esp:especialidadList, patient:patient, comp:composition, archetype:archetypeInstance, item:item /*, template:templateInstance, idPaciente: patient.id, persona:persona, compositions: rangoCompos*/])        
     }
     
     def enviarCaso = {

@@ -14,15 +14,57 @@
 		<p>Exito</p>
                 <p>${id}</p>
             </g:if>
-            <h1>${message}</h1>  
+            <h1>${message}</h1>              
             <p>rmNode: ${rmNode}</p> 
             <p>${rmNode.data.events.data.items}</p> 
             <p>episodio: ${episodioId}</p>
             <p>patient: ${patient}</p>
             
 <g:each in="${rmNode.data.events[0].data.items}" var="element">
-  <p> ${element}</p>  
+  <p>ELEMENTOS ${element}</p>  
 </g:each>
+            
+
+  <div class="CLUSTER" id="${rmNode.archetypeNodeId}" >
+  <h1>${rmNode.name.value}</h1>
+  <p>TEMPLATE ID: ${rmNode.archetypeDetails.templateId}</p>
+  <p>DATA: ${rmNode.data}</p>
+  <p>NODE ID: ${rmNode.id}</p>
+  <p>PATH: ${rmNode.path}</p>
+  <p>CLASS NAME: ${rmNode.getClassName()}</p>
+  <p>SIMPLE NAME: ${rmNode.getClass().getSimpleName()}</p>
+  <p>EVENTS 0 DATA: ${rmNode.data.events[0].data}</p>
+  
+
+  <span class="content">
+      
+  <g:set var="aomNode" value="${archetype.node(rmNode.path)}" />
+    
+        <g:each status="i" in="${aomNode.attributes[0].children}" var="children" >
+          <%
+               def aux
+               def rmItems = rmNode.data.events.data.items.findAll{ it.path == children.path() }
+                if (rmItems.size()==0) // No hay items RM para esa path, genero usando el AOM
+	      {
+                
+             
+    %>
+          <!--<p> ${rmItems} </p>
+  <!--<p> ${children} </p>-->
+          <p> NO HAY</p>
+               <% 
+	      }
+	      else
+	      {
+     %>
+          <p> SI HAY</p>
+               <% 
+              }
+          %>
+        </g:each>
+          
+  </span>
+  </div>            
             <!-- hce.core.composition.Composition -->
             <p>comp: ${comp} (${comp.class})</p> 
             <p>Composicion Content: ${comp.content} (${comp.content.class})</p>

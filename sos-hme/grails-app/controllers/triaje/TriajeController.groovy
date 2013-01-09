@@ -9,6 +9,7 @@ import hce.core.composition.*
 import hce.HceService
 import templates.TemplateManager
 import archetype_repository.ArchetypeManager
+import hce.core.common.archetyped.Locatable
 //import demographic.party
 
 
@@ -22,24 +23,6 @@ class TriajeController {
     def index = {      
     }
     
-        private Map getDomainTemplates()
-    {
-        //def routes = grailsApplication.config.domain.split('/') // [hce, trauma]
-        //def domainTemplates = grailsApplication.config.templates
-        //routes.each{
-        //    domainTemplates = domainTemplates[it]
-        //}
-        
-        // =============================================================
-        // Nuevo: para devolver los templates del dominio seleccionado
-        def domain = session.traumaContext.domainPath
-        def domainTemplates = grailsApplication.config.templates2."$domain"
-        
-        // =============================================================
-        
-        return domainTemplates
-    }
-    
     def mostrarEspecialidades = {
        /*  //Con wsdl 18
         boolean answer2 = customSecureServiceClientTriaje.getEspecialidades(uuid)
@@ -50,12 +33,11 @@ class TriajeController {
         }
         */
        
-        def composition = Composition.get(session.traumaContext?.episodioId)
+        def composition = Composition.get(session.traumaContext?.episodioId)        
         
         def patient = hceService.getPatientFromComposition( composition )
         
-//        println "JJJJJJJJJJJJJJJJJJJJJ: "+params.id
-//        println "PPPPPPPPPPPPPPPPPPPPP: "+patient.id
+        /*
         def archetypeIdP
         def templateIdP
         
@@ -75,6 +57,7 @@ class TriajeController {
                         println "rmVersion: "+composition.content.get(2).archetypeDetails.rmVersion
                         i++;
                     }
+                    */
   
     
 //        def archetypeInstance = ArchetypeManager.getInstance().getArchetype( archetypeIdP )
@@ -82,6 +65,24 @@ class TriajeController {
 //        def templateInstance = TemplateManager.getInstance().getTemplate( templateIdP )        
 //        println " templateInstance: "+templateInstance        
     
+        
+        Composition comp = Composition.get(session.traumaContext.episodioId)         
+        def templateId = "OBSERVATION-enfermedad_actual"
+        
+        def item = hceService.getCompositionContentItemForTemplate( comp, templateId )
+        
+        def rmNode = Locatable.get(item.id)
+        /*
+        if (item)
+        {
+                println "ITEMMMMMMMMM: "+item
+                println "BUSQUEDA REALIZADA CON EXITO"
+                redirect( controller:'guiGen', action:'generarShow', id: item.id,
+                          params: ['flash.message': 'trauma.list.error.registryAlreadyDone'] )
+                return            
+        }
+        */
+        
         //Con wsdl 19
         List<String> especialidadList = new ArrayList<String>();
         
@@ -91,7 +92,7 @@ class TriajeController {
             println "especialidad nombre: "+it
         }
             
-        render(view:"showEnvio2",model:[message:"Especilidades obtenidas con exito", id:params.id, esp:especialidadList, patient:patient, comp:composition/*, archetype:archetypeInstance , template:templateInstance, idPaciente: patient.id, persona:persona, compositions: rangoCompos*/])        
+        render(view:"showEnvio2",model:[message:"Especilidades obtenidas con exito", rmNode:rmNode, id:params.id, esp:especialidadList, patient:patient, comp:composition/*, archetype:archetypeInstance , template:templateInstance, idPaciente: patient.id, persona:persona, compositions: rangoCompos*/])        
     }
     
     def enviarCaso = {

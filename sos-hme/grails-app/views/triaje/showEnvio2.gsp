@@ -15,9 +15,14 @@
                 <p>${id}</p>
             </g:if>
             <h1>${message}</h1>  
+            <p>rmNode: ${rmNode}</p> 
+            <p>${rmNode.data.events.data.items}</p> 
             <p>episodio: ${episodioId}</p>
             <p>patient: ${patient}</p>
             
+<g:each in="${rmNode.data.events[0].data.items}" var="element">
+  <p> ${element}</p>  
+</g:each>
             <!-- hce.core.composition.Composition -->
             <p>comp: ${comp} (${comp.class})</p> 
             <p>Composicion Content: ${comp.content} (${comp.content.class})</p>

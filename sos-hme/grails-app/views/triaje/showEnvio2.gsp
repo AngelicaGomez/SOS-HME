@@ -48,7 +48,7 @@
     <p>Primer Nombre: ${name.primerNombre}</p> 
     <p>Segundo Nombre: ${name.segundoNombre}</p>
     <p>Primer Apellido: ${name.primerApellido}</p>
-    <p>Segundo Apellido: ${name.segundoApellido})</p>
+    <p>Segundo Apellido: ${name.segundoApellido}</p>
     
     <!-- String -->
     <p>Sexo: ${patient.sexo}</p>

@@ -23,10 +23,14 @@ class TriajeController {
     def index = {      
     }
     
+    def viewPreEnvioCaso ={
+        
+    }
+    
     def mostrarEspecialidades = {
         def rmNode
         def descripcionCaso = ""
-        def pausa =", "
+        def pausa =". "
         def episodioId = ""
         def enfermedadActual = false
         
@@ -73,8 +77,9 @@ class TriajeController {
 //            println "especialidad nombre: "+it
 //        }
             
-        render(view:"showEnvio2",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
-    }
+//        render(view:"showEnvio2",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
+        render(view:"viewPreEnvioCaso",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
+     }
     
     def enviarCaso = {
        PojoEspecialidad especialidad1 = new PojoEspecialidad()

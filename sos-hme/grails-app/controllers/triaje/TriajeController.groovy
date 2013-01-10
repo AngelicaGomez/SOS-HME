@@ -24,158 +24,56 @@ class TriajeController {
     }
     
     def mostrarEspecialidades = {
-        def generarReporte = false
         def rmNode
-        def composition = Composition.get(session.traumaContext?.episodioId)        
+        def descripcionCaso = ""
+        def pausa =", "
+        def episodioId = ""
+        def enfermedadActual = false
         
-        def patient = hceService.getPatientFromComposition( composition )
-        
-        
-        def archetypeIdP
-        def templateIdP
-//        def archetype
-//        
-//                    archetype = composition.content
-//                    println "arquetype: "+archetype
-                    int i=0;
-                    while (i< composition.content.size())
-                    {
-                        println "ContenItem: "+composition.content.get(2)
-           
-//                        archetypeDetalles = composition.content.get(2).archetypeDetails
-                        println "Detalles: "+composition.content.get(2).archetypeDetails
-                        println "Nombre: "+composition.content.get(2).name
-                        println "Nodo: "+composition.content.get(2).archetypeNodeId
-                        println "archetypeId: "+composition.content.get(2).archetypeDetails.archetypeId
-                        archetypeIdP = composition.content.get(2).archetypeDetails.archetypeId
-                        println "templateId: "+composition.content.get(2).archetypeDetails.templateId
-                        templateIdP = composition.content.get(2).archetypeDetails.templateId
-                        println "rmVersion: "+composition.content.get(2).archetypeDetails.rmVersion
-                        i++;
-                    }
-                    
-  
-    
-        def archetypeInstance = ArchetypeManager.getInstance().getArchetype( archetypeIdP )
-//        println " archetypeInstance: "+archetypeInstance
-//        def templateInstance = TemplateManager.getInstance().getTemplate( templateIdP )        
-//        println " templateInstance: "+templateInstance        
-    
-        
-        Composition comp = Composition.get(session.traumaContext.episodioId)         
+        Composition comp = Composition.get(session.traumaContext.episodioId)        
+        def patient = hceService.getPatientFromComposition( comp )
         def templateId = "OBSERVATION-enfermedad_actual"
+//        println "COMPOSICION DEL PACIENTE: "+comp
+
+        episodioId = session.traumaContext.episodioId.toString()
+//        println "Episodio id: "+episodioId
         
         def item = hceService.getCompositionContentItemForTemplate( comp, templateId )
         
         if (item != null){
             rmNode =  Locatable.findByName(item.name) //enlace al nodo de la composition en el modelo de referencia   
-            def rmNodeData =  rmNode.data            
-//            println "rmNodeData: "+rmNodeData
+            def rmNodeData =  rmNode.data     
             def rmNodeDataEvents = rmNodeData.events
-//            println "rmNodeDataEvents: "+rmNodeDataEvents
-//            println "otra forma rmNode.data.events: "+rmNode.data.events
             
-            
-//            println "rmNodeDataEvents.data: "+rmNodeDataEvents[0].data
-//            println "rmNodeDataEvents.data.items: "+rmNodeDataEvents[0].data.items
-//            println "rmNodeDataEvents.data.items.items: "+rmNodeDataEvents[0].data.items.items
-//            println "rmNodeDataEvents.data.items.items.items: "+rmNodeDataEvents[0].data.items.items[0].items[0]  //TODOS LOS ELEMENTOS QUE COMPONEN A LA ENFERMEDAD ACTUAL
-            
-            
-            
-//            def element = rmNodeDataEvents[0].data.items
-//            println "elementos: "+element
-//            def element2 = rmNodeDataEvents[0].data.items.items[0]
-//            println "elementos 2: "+element2
-//            def element3 = rmNodeDataEvents[0].data.items.items.value[0]
-//            println "elementos 3: "+element3
-            def j=0
             def k=0 // variable de ciclo, usada en caso de que la composition tenga varios 
-            def codigos = []
-            def codigo//rmNode.name.value
-//            println "elementos posicion k: "+element2[k]
-//            println "Nombre: "+element2[k].name.value
-
+            def j=0
+            if (k==(k+1)){
+               j=0
+            }
+            
             def element = rmNodeDataEvents[0].data.items.items[0].items
-            println "ELEMENTOS: "+element[k]
-            println "ELEMENTOS: "+element[k][j]
-                while(element[k]!=null){    
+          
+                while(element[k]!=null){   
+                   enfermedadActual = true
                    while(element[k][j]!=null){
-//                   println "elemento 1: "+element[j]
-                    if(element[k][j].name.value=="Sintoma"){
-                        println "---- SINTOMAS DE ENFERMEDAD ACTUAL: ----" 
-                        println "Sinstomas: "+element[k][j].name.value
-                    }
-                    if(element[k][j].name.value=="Aparición"){ 
-                        println "---- APARICION DE ENFERMEDAD ACTUAL: ----" 
-                        println "Aparición: "+element[k][j].name.value
-                    }
-                    if(element[k][j].name.value=="Localización"){ 
-                        println "---- LOCALIZACION DE ENFERMEDAD ACTUAL: ----"    
-                        println "Localización: "+element[k][j].name.value               
-                    }  
-                    if(element[k][j].name.value=="Intensidad"){ 
-                        println "---- INTENSIDAD DE ENFERMEDAD ACTUAL: ----" 
-                        println "Intensidad: "+element[k][j].name.value                  
-                    }
-                    if(element[k][j].name.value=="Carácter"){ 
-                        println "---- CARACTER DE ENFERMEDAD ACTUAL: ----"   
-                        println "Carácter: "+element[k][j].name.value                
-                    }      
-                    if(element[k][j].name.value=="Concomitantes"){ 
-                        println "---- CONCOMITANTES DE ENFERMEDAD ACTUAL: ----" 
-                        println "Concomitantes: "+element[k][j].name.value                  
-                    }
-                    if(element[k][j].name.value=="Alivio"){ 
-                        println "---- ALIVIO DE ENFERMEDAD ACTUAL: ----"     
-                        println "Alivio: "+element[k][j].name.value              
-                    }        
-                    if(element[k][j].name.value=="Agravantes"){ 
-                        println "---- AGRAVANTES DE ENFERMEDAD ACTUAL: ----"  
-                        println "Agravantes: "+element[k][j].name.value //                                         
-                    }
-                    if(element[k][j].name.value=="Desencadenantes"){ 
-                        println "---- DESENCADENANTES DE ENFERMEDAD ACTUAL: ----" 
-                        println "Desencadenantes: "+element[k][j].name.value                  
-                    }      
-                    if(element[k][j].name.value=="Duración"){ 
-                        println "---- DURACION DE ENFERMEDAD ACTUAL: ----"   
-                        println "Duración: "+element[k][j].name.value                
-                    }
-                    if(element[k][j].name.value=="Frecuencia"){ 
-                        println "---- FRECUENCIA DE ENFERMEDAD ACTUAL: ----" 
-                        println "Frecuencia: "+element[k][j].name.value                  
-                    }  
-                    if(element[k][j].name.value=="Color"){ 
-                        println "---- COLOR DE ENFERMEDAD ACTUAL: ----"  
-                        println "Color: "+element[k][j].name.value                 
-                    }
+//                       println "elemento[k][j]: "+element[k][j]
+                     descripcionCaso = descripcionCaso + element[k][j].name.value+": "+element[k][j].value.value + pausa
+          
                     j++
-                        }
-                    k++
+                   }
+                k++
                 }      
         }
-        /*
-        if (item)
-        {
-                println "ITEMMMMMMMMM: "+item
-                println "BUSQUEDA REALIZADA CON EXITO"
-                redirect( controller:'guiGen', action:'generarShow', id: item.id,
-                          params: ['flash.message': 'trauma.list.error.registryAlreadyDone'] )
-                return            
-        }
-        */
-        
-        //Con wsdl 19
+
         List<String> especialidadList = new ArrayList<String>();
         
         especialidadList = customSecureServiceClientTriaje.getEspecialidades(uuid)
         
-        especialidadList.each{
-            println "especialidad nombre: "+it
-        }
+//        especialidadList.each{
+//            println "especialidad nombre: "+it
+//        }
             
-        render(view:"showEnvio2",model:[message:"Especilidades obtenidas con exito", rmNode:rmNode, id:params.id, esp:especialidadList, patient:patient, comp:composition, archetype:archetypeInstance, item:item /*, template:templateInstance, idPaciente: patient.id, persona:persona, compositions: rangoCompos*/])        
+        render(view:"showEnvio2",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
     }
     
     def enviarCaso = {

@@ -115,7 +115,6 @@
                     
                     <g:actionSubmit action="enviarCaso" value="Enviar caso" class="boton1"/>
                  
-         
     </div>
 </div>    
 </g:form>

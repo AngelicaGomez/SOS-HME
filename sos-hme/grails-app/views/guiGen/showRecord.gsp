@@ -11,8 +11,7 @@
     <h1>Template: ${rmNode.archetypeDetails.templateId}</h1>
     --%>
     <div id="nivel3">
-
-
+     
       
     <div class="ehrform">
 

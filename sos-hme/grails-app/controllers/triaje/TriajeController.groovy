@@ -18,7 +18,7 @@ class TriajeController {
     def hceService
 
     def customSecureServiceClientTriaje
-    static String uuid = "312f2a79-7b4d-4d0b-ae27-b62badb622cc"
+    static String uuid = "c99338f6-1221-4bc1-a4ea-243eff0b4167"
     
     def index = {      
     }
@@ -27,7 +27,7 @@ class TriajeController {
         
     }
     
-    def mostrarEspecialidades = {
+    def previewEnviarCaso = {
         def rmNode
         def descripcionCaso = ""
         def pausa =". "
@@ -37,10 +37,8 @@ class TriajeController {
         Composition comp = Composition.get(session.traumaContext.episodioId)        
         def patient = hceService.getPatientFromComposition( comp )
         def templateId = "OBSERVATION-enfermedad_actual"
-//        println "COMPOSICION DEL PACIENTE: "+comp
 
         episodioId = session.traumaContext.episodioId.toString()
-//        println "Episodio id: "+episodioId
         
         def item = hceService.getCompositionContentItemForTemplate( comp, templateId )
         
@@ -60,46 +58,41 @@ class TriajeController {
                 while(element[k]!=null){   
                    enfermedadActual = true
                    while(element[k][j]!=null){
-//                       println "elemento[k][j]: "+element[k][j]
+
                      descripcionCaso = descripcionCaso + element[k][j].name.value+": "+element[k][j].value.value + pausa + "\n"
-          
+                 
                     j++
                    }
                 k++
                 }      
+        }      
+        else{
+            if(!descripcionCaso){
+//                println "NECESITA LLENAR LOS DATOS DE ENFERMEDAD ACTUAL"
+                flash.message = "Pureba"
+                redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId)
+                return
+            }   
         }
-
-
+  
         List<String> especialidadList = new ArrayList<String>();
         
         especialidadList = customSecureServiceClientTriaje.getEspecialidades(uuid)
         
-//        especialidadList.each{
-//            println "especialidad nombre: "+it
-//        }
-            
-//        render(view:"showEnvio2",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
         render(view:"viewPreEnvioCaso",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
      }
     
     def enviarCaso = {        
         String nacionalidad = ""
         String fechaNacimiento = ""
-        List<String> strinFechaNacimiento = new ArrayList<String>();
+        String nombrePaciente = ""
+        String apellidoPaciente = ""
         
-         println "primerNombre: "+params.primerNombre+" Clase: "+params.primerNombre.class
-         println "segundoNombre: "+params.segundoNombre+" Clase: "+params.segundoNombre.class
-         println "primerApellido: "+params.primerApellido+" Clase: "+params.primerApellido.class
-         println "segundoApellido: "+params.segundoApellido+" Clase: "+params.segundoApellido.class
-         println "cedula: "+params.cedula+" Clase: "+params.cedula.class
-         println "sexo: "+params.sexo+" Clase: "+params.sexo.class
-         println "nacionalidad: "+params.nacionalidad+" Clase: "+params.nacionalidad.class
-         println "fechaNacimiento: "+params.fechaNacimiento+" Clase: "+params.fechaNacimiento.class
-         println "pacienteId: "+params.pacienteId+" Clase: "+params.pacienteId.class
-         println "episodioId: "+params.episodioId+" Clase: "+params.episodioId.class
-         println "descripcionCaso: "+params.descripcionCaso+" Clase: "+params.descripcionCaso.class
-         println "ESPECIALIDAD ESCOGIDA: "+params.especialidad+" Clase: "+params.especialidad.class
+        List<String> strinFechaNacimiento = new ArrayList<String>();
 
+         nombrePaciente = params.primerNombre+" "+params.segundoNombre
+         apellidoPaciente = params.primerApellido+" "+params.segundoApellido
+         
          if(params.nacionalidad=="Venezuela"){
              if(params.sexo=="Masculino"){
                  nacionalidad="Venezonalo"
@@ -114,30 +107,25 @@ class TriajeController {
              }             
          }
          
-        println "Nacionalidad Nueva: "+nacionalidad+" Calse: "+nacionalidad.class
-         
-
         params.fechaNacimiento.split("\\ ").each{
-            println "split: "+it
             strinFechaNacimiento.add(it)
         } 
         
          fechaNacimiento = strinFechaNacimiento.first()
-         println "Fecha de NAcimiento nueva: "+fechaNacimiento+" Clase: "+fechaNacimiento.class
          
-//       PojoEspecialidad especialidad1 = new PojoEspecialidad()
-//       especialidad1.setNombre("Dermatologia")
-//                        
-//       List<PojoEspecialidad> especialidades = new ArrayList<PojoEspecialidad>();
-//       especialidades.add(especialidad1)        
-//            
-//       PojoPaciente paciente = new PojoPaciente()
-//            paciente.setNombre("Carmen")
-//            paciente.setApellido("Guzman")
-//            paciente.setCedula("19867443")
-//            paciente.setSexo("Femenino")
-//            paciente.setNacionalidad("Venezolana")
-//            paciente.setFechaNacimiento("1987-06-01")
+       PojoEspecialidad especialidad1 = new PojoEspecialidad()
+       especialidad1.setNombre(params.especialidad)
+                        
+       List<PojoEspecialidad> especialidades = new ArrayList<PojoEspecialidad>();
+       especialidades.add(especialidad1)        
+            
+       PojoPaciente paciente = new PojoPaciente()
+            paciente.setNombre(nombrePaciente)
+            paciente.setApellido(apellidoPaciente)
+            paciente.setCedula(params.cedula)
+            paciente.setSexo(params.sexo)
+            paciente.setNacionalidad(nacionalidad)
+            paciente.setFechaNacimiento(fechaNacimiento)
 //
 //        //Se abre el archivo
 //        File txt = new File("C:/hola.txt")             
@@ -152,25 +140,26 @@ class TriajeController {
 //       archivos.add(archivo)            
 //        
 ////        byte[] bytes = archivo.getBytes() 
-//        
-//        PojoCaso caso = new PojoCaso()
-//            caso.setIdCasoSOS("10a")
-//            caso.archivos = archivos
-//            caso.especialidad = especialidades
-//            caso.setPaciente(paciente)
-//            caso.setDescripcion("Desc. Caso de prueba enviado desde SOS-HME")
-//        
-//        boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
-//        
-//        if (answer==true){
-//            render "ACCESO PERMITIDO"
-//        }else{
-//            render "ACCESO DENEGADO"
-//        }        
-//        
-//        
-//        render "id"+params.id
-//            
-//        render(view:"showEnvio",model:[message:"Caso enviado con exito", id:params.id])
+        PojoCaso caso = new PojoCaso()
+            caso.setIdCasoSOS(params.episodioId)
+            caso.archivos = null
+            caso.especialidad = especialidades
+            caso.setPaciente(paciente)
+            caso.setDescripcion(params.descripcionCaso)
+        
+        boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
+        String message=""
+        
+        if (answer==true){
+            render "ACCESO PERMITIDO"
+            message = "Caso enviado con exito"
+        }else{
+            render "ACCESO DENEGADO"
+            message = "El Caso NO ha podido ser enviado con exito"
+        }        
+                         
+        render "id"+params.episodioId
+            
+        render(view:"showEnvio",model:[message:message, id:params.episodioId])
     }    
 }

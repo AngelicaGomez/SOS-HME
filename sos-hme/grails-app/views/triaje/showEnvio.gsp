@@ -11,9 +11,6 @@
   </head>
   <body>
     <h1>SHOW DEL CASO A ENVIAR</h1>
-            <g:if test="${id}">
-		<h1>Exito</h1>
-            </g:if>
             <h1>${id}</h1>
             <h1>${message}</h1>
             

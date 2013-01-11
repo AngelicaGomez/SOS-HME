@@ -595,7 +595,7 @@
                 
                         <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>
                          <li>                           
-                           <a href="${createLink(controller: 'triaje', action: 'mostrarEspecialidades', id:episodeId)}">
+                           <a href="${createLink(controller: 'triaje', action: 'previewEnviarCaso', id:episodeId)}">
                              <g:message code="Enviar a SOS-TRIAJE" />
                            </a>
                          </li>

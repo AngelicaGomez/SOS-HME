@@ -61,13 +61,14 @@ class TriajeController {
                    enfermedadActual = true
                    while(element[k][j]!=null){
 //                       println "elemento[k][j]: "+element[k][j]
-                     descripcionCaso = descripcionCaso + element[k][j].name.value+": "+element[k][j].value.value + pausa
+                     descripcionCaso = descripcionCaso + element[k][j].name.value+": "+element[k][j].value.value + pausa + "\n"
           
                     j++
                    }
                 k++
                 }      
         }
+
 
         List<String> especialidadList = new ArrayList<String>();
         
@@ -81,53 +82,95 @@ class TriajeController {
         render(view:"viewPreEnvioCaso",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
      }
     
-    def enviarCaso = {
-       PojoEspecialidad especialidad1 = new PojoEspecialidad()
-       especialidad1.setNombre("Dermatologia")
-                        
-       List<PojoEspecialidad> especialidades = new ArrayList<PojoEspecialidad>();
-       especialidades.add(especialidad1)        
-            
-       PojoPaciente paciente = new PojoPaciente()
-            paciente.setNombre("Carmen")
-            paciente.setApellido("Guzman")
-            paciente.setCedula("19867443")
-            paciente.setSexo("Femenino")
-            paciente.setNacionalidad("Venezolana")
-            paciente.setFechaNacimiento("1987-06-01")
+    def enviarCaso = {        
+        String nacionalidad = ""
+        String fechaNacimiento = ""
+        List<String> strinFechaNacimiento = new ArrayList<String>();
+        
+         println "primerNombre: "+params.primerNombre+" Clase: "+params.primerNombre.class
+         println "segundoNombre: "+params.segundoNombre+" Clase: "+params.segundoNombre.class
+         println "primerApellido: "+params.primerApellido+" Clase: "+params.primerApellido.class
+         println "segundoApellido: "+params.segundoApellido+" Clase: "+params.segundoApellido.class
+         println "cedula: "+params.cedula+" Clase: "+params.cedula.class
+         println "sexo: "+params.sexo+" Clase: "+params.sexo.class
+         println "nacionalidad: "+params.nacionalidad+" Clase: "+params.nacionalidad.class
+         println "fechaNacimiento: "+params.fechaNacimiento+" Clase: "+params.fechaNacimiento.class
+         println "pacienteId: "+params.pacienteId+" Clase: "+params.pacienteId.class
+         println "episodioId: "+params.episodioId+" Clase: "+params.episodioId.class
+         println "descripcionCaso: "+params.descripcionCaso+" Clase: "+params.descripcionCaso.class
+         println "ESPECIALIDAD ESCOGIDA: "+params.especialidad+" Clase: "+params.especialidad.class
 
-        //Se abre el archivo
-        File txt = new File("C:/hola.txt")             
-//        render txt.getBytes().toString()
+         if(params.nacionalidad=="Venezuela"){
+             if(params.sexo=="Masculino"){
+                 nacionalidad="Venezonalo"
+             }else{
+                 nacionalidad="Venezonala"
+             }
+         }else{
+             if(params.sexo=="Masculino"){
+                 nacionalidad="Extranjero"
+             }else{
+                 nacionalidad="Extranjera"
+             }             
+         }
+         
+        println "Nacionalidad Nueva: "+nacionalidad+" Calse: "+nacionalidad.class
+         
 
-       PojoArchivo archivo = new PojoArchivo()
-            archivo.setNombre("hola.txt")
-            archivo.setDescripcion("prueba de archivo")
-            archivo.setAdjunto(txt.getBytes())        
-            
-       List<PojoArchivo> archivos = new ArrayList<PojoArchivo>();
-       archivos.add(archivo)            
+        params.fechaNacimiento.split("\\ ").each{
+            println "split: "+it
+            strinFechaNacimiento.add(it)
+        } 
         
-//        byte[] bytes = archivo.getBytes() 
-        
-        PojoCaso caso = new PojoCaso()
-            caso.setIdCasoSOS("10a")
-            caso.archivos = archivos
-            caso.especialidad = especialidades
-            caso.setPaciente(paciente)
-            caso.setDescripcion("Desc. Caso de prueba enviado desde SOS-HME")
-        
-        boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
-        
-        if (answer==true){
-            render "ACCESO PERMITIDO"
-        }else{
-            render "ACCESO DENEGADO"
-        }        
-        
-        
-        render "id"+params.id
-            
-        render(view:"showEnvio",model:[message:"Caso enviado con exito", id:params.id])
+         fechaNacimiento = strinFechaNacimiento.first()
+         println "Fecha de NAcimiento nueva: "+fechaNacimiento+" Clase: "+fechaNacimiento.class
+         
+//       PojoEspecialidad especialidad1 = new PojoEspecialidad()
+//       especialidad1.setNombre("Dermatologia")
+//                        
+//       List<PojoEspecialidad> especialidades = new ArrayList<PojoEspecialidad>();
+//       especialidades.add(especialidad1)        
+//            
+//       PojoPaciente paciente = new PojoPaciente()
+//            paciente.setNombre("Carmen")
+//            paciente.setApellido("Guzman")
+//            paciente.setCedula("19867443")
+//            paciente.setSexo("Femenino")
+//            paciente.setNacionalidad("Venezolana")
+//            paciente.setFechaNacimiento("1987-06-01")
+//
+//        //Se abre el archivo
+//        File txt = new File("C:/hola.txt")             
+////        render txt.getBytes().toString()
+//
+//       PojoArchivo archivo = new PojoArchivo()
+//            archivo.setNombre("hola.txt")
+//            archivo.setDescripcion("prueba de archivo")
+//            archivo.setAdjunto(txt.getBytes())        
+//            
+//       List<PojoArchivo> archivos = new ArrayList<PojoArchivo>();
+//       archivos.add(archivo)            
+//        
+////        byte[] bytes = archivo.getBytes() 
+//        
+//        PojoCaso caso = new PojoCaso()
+//            caso.setIdCasoSOS("10a")
+//            caso.archivos = archivos
+//            caso.especialidad = especialidades
+//            caso.setPaciente(paciente)
+//            caso.setDescripcion("Desc. Caso de prueba enviado desde SOS-HME")
+//        
+//        boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
+//        
+//        if (answer==true){
+//            render "ACCESO PERMITIDO"
+//        }else{
+//            render "ACCESO DENEGADO"
+//        }        
+//        
+//        
+//        render "id"+params.id
+//            
+//        render(view:"showEnvio",model:[message:"Caso enviado con exito", id:params.id])
     }    
 }

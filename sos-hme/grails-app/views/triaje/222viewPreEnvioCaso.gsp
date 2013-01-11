@@ -20,7 +20,7 @@
   </div>
       
    
-<g:form>
+<g:form  method="post">
 <div id="nivel1">
     <div id="nivel2">
         <div id="contenido">
@@ -100,22 +100,9 @@
 <p style="clear:both">&nbsp;</p>
             </div>
         </div>
-          
-                    <g:hiddenField name="primerNombre" value="${name.primerNombre}" />
-                    <g:hiddenField name="segundoNombre" value="${name.segundoNombre}" />
-                    <g:hiddenField name="primerApellido" value="${name.primerApellido}" />
-                    <g:hiddenField name="segundoApellido" value="${name.segundoApellido}" />
-                    <g:hiddenField name="cedula" value="${patient.ids[0].extension}" />
-                    <g:hiddenField name="sexo" value="${patient.sexo}" />
-                    <g:hiddenField name="nacionalidad" value="${name.nacionalidad.nombre}" />
-                    <g:hiddenField name="fechaNacimiento" value="${patient?.fechaNacimiento}" />
-                    <g:hiddenField name="pacienteId" value="${patient.id}" />
-                    <g:hiddenField name="episodioId" value="${episodioId}" />
-                    <g:hiddenField name="descripcionCaso" value="${descripcionCaso}" />
-                    
-                    <g:actionSubmit action="enviarCaso" value="Enviar caso" class="boton1"/>
-                 
-         
+    <!--<g:link class="boton1"><g:message code="Enviar caso"/></g:link>   
+    <g:submitButton action="enviarCaso" name="enviarCaso" class="boton1" value="${message(code: 'enviarCaso', default: 'Enviar caso')}" />-->
+    <g:actionSubmit action="enviarCaso" value="Enviar caso" class="boton1"/>
     </div>
 </div>    
 </g:form>

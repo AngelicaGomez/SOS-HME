@@ -87,9 +87,13 @@
                <td valign="top">${episodioId}</td>
             </tr>  
             <tr>
-                <td valign="top"><label for="especialidad"><g:message code="Especialidad" default="Especialidad" /></label></td>
+                <td valign="top"><label for="especialidad"><g:message code="Especialidad 1" default="Especialidad 1" /></label></td>
                 <td valign="top"><g:select  style="width:250px" name="especialidad" noSelection="['':'Seleccione']" from="${esp}"/></td>
-            </tr>            
+            </tr>        
+            <tr>
+                <td valign="top"><label for="especialidad2"><g:message code="Especialidad 2" default="Especialidad 2" /></label></td>
+                <td valign="top"><g:select  style="width:250px" name="especialidad2" noSelection="['':'Seleccione']" from="${esp}"/></td>
+            </tr>              
             <tr>
                <td valign="top"><label for="descripcion"><g:message code="descripcion" default="Enfermedad Actual:" /></label></td>
                <td valign="top"><g:encodeAs codec="NL2BR">${descripcionCaso}</g:encodeAs></td>
@@ -113,8 +117,9 @@
                     <g:hiddenField name="episodioId" value="${episodioId}" />
                     <g:hiddenField name="descripcionCaso" value="${descripcionCaso}" />
                     
-                    <g:actionSubmit action="enviarCaso" value="Enviar caso" class="boton1"/>
+                    <g:actionSubmit action="enviarCaso" value="Enviar caso" class="boton1" onclick="return confirm('${message(code: 'default.button.send.sos.confirm.message', default: 'Esta seguro?')}');"/>
                  
+<g:link controller="records" action="list" class="boton1"><g:message code="trauma.show.action.back.chose"  /></g:link>                    
     </div>
 </div>    
 </g:form>

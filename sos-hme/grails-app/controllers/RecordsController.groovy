@@ -465,7 +465,7 @@ def create = {
 }
     
 def show = {
-       
+       println "AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
     // TODO: poner en sesion el episodio que se esta viendo
     println "Show: " + params
        
@@ -481,6 +481,11 @@ def show = {
        
        def composition = Composition.get( params.id )
        
+//     Agregafo por Angelica Gomez
+       def tipo = params.tipo
+       println "tipo: "+tipo
+//     ----------------------------    
+
 	   if(!composition){
 			
 			//regar flash.message error.label.episodio.invalido="El episodio seleccionado es invalido"
@@ -524,9 +529,12 @@ def show = {
 		
 		logged("Episodio seleccionado correctamente episodioId: "+session.traumaContext.episodioId+" ", "info", session.traumaContext.userId)
 		
-	
+//              Agregafo por Angelica Gomez                
+                if (tipo=="sinEnfermedadActual"){
+                    flash.message = 'default.no.description.message'
+                }    
+//              ----------------------------------------------------------
 
-    
 		redirect(controller:'guiGen',action:'showRecord')
 }
     

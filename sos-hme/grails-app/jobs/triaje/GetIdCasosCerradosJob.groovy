@@ -1,5 +1,7 @@
 package triaje
 
+import org.codehaus.groovy.grails.commons.*
+
 import webService.PojoMedico
 import webService.PojoCasoResuelto
 
@@ -15,7 +17,8 @@ class GetIdCasosCerradosJob {
     public PojoMedico thisResponsable
     
     def execute() {
-        String uuid = "312f2a79-7b4d-4d0b-ae27-b62badb622cc"
+//        String uuid = "fcf22a15-6871-4469-801c-3eeecce05839"
+        String uuid = ConfigurationHolder.config.centroSOS.id
 
         List<String> casosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
          
@@ -23,17 +26,17 @@ class GetIdCasosCerradosJob {
               casosCerrados.each{
                   
                     println "CASO TRAMITADO CORRECTAMENTE: "+it
+                    
                     this.thisCasoResuelto = customSecureServiceClientTriaje.getCasoResuelto(it)
-                    println "paso 1"
-
+                   
                     this.thisResponsable = thisCasoResuelto.responsable
 
                     println "DETALLE DEL CASO: "
                     println "CASO: "+thisCasoResuelto.idCasoSOS
                     println "MEDICO RESPONSABLE: "+thisResponsable.nombre+" "+thisResponsable.apellido
-                    println "SOLUCION AL CASO: "+thisCasoResuelto.opinion
+//                    println "SOLUCION AL CASO: "+thisCasoResuelto.opinion
                     println "FECHA DE SOLUCION: "+thisCasoResuelto.fechaSolucion
-
+//
                 } 
        }
             

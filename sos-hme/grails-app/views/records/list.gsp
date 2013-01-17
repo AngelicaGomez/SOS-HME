@@ -23,6 +23,10 @@
         <li>
         <g:link controller="reportes"><g:message code="reportes.Reportes"/></g:link>
         </li>
+        
+        <li>
+        <g:link controller="triaje" action="viewCasoResuelto"><g:message code="NUEVO"/></g:link>
+        </li>
       </ul>
     </div>
 

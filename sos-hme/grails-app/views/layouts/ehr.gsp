@@ -595,7 +595,7 @@
                 
                         <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>
                          <li>                           
-                           <a href="${createLink(controller: 'triaje', action: 'previewEnviarCaso', id:episodeId)}">
+                           <a href="${createLink(controller: 'triaje', action: 'previewEnviarCaso', id:episodeId)}" onclick="return confirm('${message(code: 'default.link.send.sos.confirm.message', default: 'Esta seguro?')}');">
                              <g:message code="Enviar a SOS-TRIAJE" />
                            </a>
                          </li>

@@ -1,11 +1,14 @@
 package triaje
 
+import org.codehaus.groovy.grails.commons.*
+
 class TriajeStatusController {
 
     def customSecureServiceClientTriaje
     def index = { 
 
-    String uuid = "312f2a79-7b4d-4d0b-ae27-b62badb622cc"
+//    String uuid = "fcf22a15-6871-4469-801c-3eeecce05839"
+    String uuid = ConfigurationHolder.config.centroSOS.id
     
     List<String> CasosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
         if(CasosCerrados){

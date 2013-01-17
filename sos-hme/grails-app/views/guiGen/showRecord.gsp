@@ -11,7 +11,12 @@
     <h1>Template: ${rmNode.archetypeDetails.templateId}</h1>
     --%>
     <div id="nivel3">
-     
+      
+    <g:if test="${flash.message}">
+      <div class="aviso">
+      <ul><li>  <g:message code="${flash.message}" /></li></ul>
+      </div>
+    </g:if>
       
     <div class="ehrform">
 
@@ -22,6 +27,7 @@
               <g:if test="${!content}">
 
                 <h2><p style="margin-left: 50px;"><g:message code="guiGen.showRecord.vacio" /></p></h2>
+                
               </g:if>
               <g:else>
                 <g:each in="${content}" var="content">

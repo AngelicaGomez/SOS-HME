@@ -23,7 +23,8 @@ class TriajeController {
     static String uuid = ConfigurationHolder.config.centroSOS.id
     public PojoCasoResuelto thisCasoResuelto
     public PojoMedico thisResponsable
-        
+//    List<String> archivosSubidos = new ArrayList<String>();
+    
     def index = {      
     }
     
@@ -220,5 +221,38 @@ class TriajeController {
                     return  
                 }
         }
-   }    
+   }
+   
+    def importar = {
+        
+    }
+    
+    def archivo = {
+        def webRootDir = servletContext.getRealPath("/")        
+//        def userDir = new File(webRootDir, "/cargarArchivosSosTriaje")
+        
+         //Se abre el archivo, en la carpeta destinada para ello
+         File txt = new File(webRootDir+"/cargarArchivosSosTriaje/"+"debug.txt")
+         render txt.getBytes().toString()        
+    }
+    
+    //METODO PARA IMPORTAR ARCHIVOS
+    def importarArchivos = {
+        // se recupera el archivo en la varible archivo (fileName), que es el nombre del imput file del gsp
+        def archivo= request.getFile('fileName')
+          // se crea el directorio en la ruta donde esta la aplicacion y se agrega la carpeta cargarArchivos
+        def webRootDir = servletContext.getRealPath("/")        
+        def userDir = new File(webRootDir, "/cargarArchivosSosTriaje")
+        userDir.mkdirs()
+        // se guarda el archivo en esa carpeta
+        archivo.transferTo( new File( userDir, archivo.originalFilename))
+        // para obtener el apth del archivo
+        String file=userDir.toString()+ File.separator + archivo.originalFilename
+        // se agrega el nombre del archivo a una lista en caso de querer imprimir el nombre
+        ArrayList nomArchivo=new ArrayList()
+        nomArchivo.add(archivo.originalFilename)
+        // se regresa la lista a un gsp
+        
+        render (view:'importar', model:[nomArchivo:nomArchivo])
+    }     
 }

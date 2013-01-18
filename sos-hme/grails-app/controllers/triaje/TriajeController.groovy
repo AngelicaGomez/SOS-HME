@@ -20,11 +20,9 @@ class TriajeController {
     def hceService
 
     def customSecureServiceClientTriaje
-//    static String uuid = "fcf22a15-6871-4469-801c-3eeecce05839"
     static String uuid = ConfigurationHolder.config.centroSOS.id
     public PojoCasoResuelto thisCasoResuelto
     public PojoMedico thisResponsable
-//    static List<PojoCasoResuelto> casosParaMostrar = new List<PojoCasoResuelto>
         
     def index = {      
     }
@@ -33,9 +31,12 @@ class TriajeController {
         
     }
     
+    //METODO PARA MOSTRAR LOS CASOS CERRADOS
     def viewCasoResuelto ={
         List<String> casosParaMostrar = new ArrayList<String>();
-        List<String> casosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
+        List<String> casosCerrados = new ArrayList<String>();
+        
+        casosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
                 
         if(casosCerrados){
               casosCerrados.each{
@@ -56,17 +57,11 @@ class TriajeController {
                     
                     render(view: "viewCasoResuelto", model: [casoInstanceList: casosCerrados, responsable:thisResponsable, caso:thisCasoResuelto, casoMostrado:casosParaMostrar]) 
                 } 
-       }
+       }    
+     }
     
-//        List<String> casosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)
-//         
-//        if(casosCerrados){
-//
-//            render(view: "viewCasoResuelto", model: [casoInstanceList: casosCerrados]) 
-//       }        
-    }
-    
-    def previewEnviarCaso = {
+    //METODO PARA GENERAR VISTA DEL PREVIEW DEL CASO A ENVIAR
+     def previewEnviarCaso = {
         def rmNode
         def descripcionCaso = ""
         def pausa =". "
@@ -79,6 +74,7 @@ class TriajeController {
 
         episodioId = session.traumaContext.episodioId.toString()
         
+        //SERVICIO PROPIO DE SOS-HME PARA OBTENER LA COMPOSICION DEL PACIENTE
         def item = hceService.getCompositionContentItemForTemplate( comp, templateId )
         
         if (item != null){
@@ -107,22 +103,21 @@ class TriajeController {
         }      
         else{
             if(!descripcionCaso){
-//                println "NECESITA LLENAR LOS DATOS DE ENFERMEDAD ACTUAL"
                 String tipo = "sinEnfermedadActual"
-                flash.message = 'default.no.description.message'
                 redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId, params:[tipo:tipo])
-//                redirect(controller:'records', action:'list')
                 return
             }   
         }
   
         List<String> especialidadList = new ArrayList<String>();
         
+        //SERVICIO PARA MOSTRAR EN SOS-HME LAS ESPECIALIDADES SEGUN ESPECIALISTAS DISPONIBLES EN SOS-TRIAJE
         especialidadList = customSecureServiceClientTriaje.getEspecialidades(uuid)
         
         render(view:"viewPreEnvioCaso",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
      }
     
+    //METODO PARA OBTENER LOS DATOS DE LA VISTA PREVIEW DEL CASO A ENVIAR, CREAR EL POJOCASO Y USAR EL SERVICIO PARA ENVIAR EL CASO A SOS-TRIAJE
     def enviarCaso = {   
         String nacionalidad = ""
         String fechaNacimiento = ""
@@ -170,7 +165,6 @@ class TriajeController {
             especialidades.add(especialidad2)
         }                   
 
-            
        PojoPaciente paciente = new PojoPaciente()
             paciente.setNombre(nombrePaciente)
             paciente.setApellido(apellidoPaciente)
@@ -205,32 +199,26 @@ class TriajeController {
             caso.setPaciente(paciente)
             caso.setDescripcion(params.descripcionCaso)
         
-        boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
-        String message=""
+        //SERVICIO PARA VERIFICAR SI EL CASO QUE SE INTENTA ENVIAR A SOS-TRIAJE YA HA SIDO ENVIADO        
+        boolean enviado = customSecureServiceClientTriaje.ifCaseSent(params.episodioId, uuid)
         
-        if (answer==true){
-//            render "ACCESO PERMITIDO"
-//            message = "Caso enviado con exito"
-            
-            flash.message = "default.send.caso.message"
-            redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId)
-            return  
-        
+        if (enviado){
+                String tipo = "casoEnviadoAnteriormente"
+                redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId, params:[tipo:tipo])
+                return            
         }else{
-//            render "ACCESO DENEGADO"
-//            message = "El Caso NO ha podido ser enviado con exito"
-            flash.message = "default.no.send.caso.message"
-            redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId)
-            return  
+                //SERVICIO PARA ENVIAR EL CASO A SOS-TRIAJE DESDE SOS-HME Y OPERAR SOS-TRIAJE        
+                boolean answer = customSecureServiceClientTriaje.enviarCasoTriaje(caso, uuid)
+
+                if (answer==true){
+                    String tipo = "casoSinPoderEnviar"
+                    redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId, params:[tipo:tipo])
+                    return          
+                }else{
+                    String tipo = "casoEnviadoConExito"
+                    redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId, params:[tipo:tipo])
+                    return  
+                }
         }
-                         
-//        render "id"+params.episodioId
-//            
-//        render(view:"showEnvio",model:[message:message, id:params.episodioId])
-        
-        //no se ve mensaje de exitoxq se redirecciona sin mostrar mensaje!!
-
-
-        
    }    
 }

@@ -480,11 +480,7 @@ def show = {
        
        
        def composition = Composition.get( params.id )
-       
-//     Agregafo por Angelica Gomez
-       def tipo = params.tipo
-       println "tipo: "+tipo
-//     ----------------------------    
+
 
 	   if(!composition){
 			
@@ -529,11 +525,29 @@ def show = {
 		
 		logged("Episodio seleccionado correctamente episodioId: "+session.traumaContext.episodioId+" ", "info", session.traumaContext.userId)
 		
-//              Agregafo por Angelica Gomez                
+       
+//------------------------  Agregafo por Angelica Gomez  -----------------------
+        if(params.tipo){
+            def tipo = params.tipo
+            println "tipo: "+tipo     
+            
                 if (tipo=="sinEnfermedadActual"){
                     flash.message = 'default.no.description.message'
-                }    
-//              ----------------------------------------------------------
+                }     
+                
+                if (tipo=="casoSinPoderEnviar"){
+                    flash.message = 'default.send.caso.message'
+                }
+                
+                if (tipo=="casoEnviadoConExito"){
+                    flash.message = 'default.no.send.caso.message'
+                }            
+               
+                if (tipo=="casoEnviadoAnteriormente"){
+                    flash.message = 'default.sent.caso.message'
+                }               
+        }
+//------------------------------------------------------------------------------
 
 		redirect(controller:'guiGen',action:'showRecord')
 }

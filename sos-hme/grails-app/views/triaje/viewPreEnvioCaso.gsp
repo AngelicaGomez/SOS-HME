@@ -19,10 +19,11 @@
   </ul>
   </div>
       
-   
-<g:form>
+
 <div id="nivel1">
     <div id="nivel2">
+      
+      <g:form>
         <div id="contenido">
             <div class="form1"> 
               
@@ -97,7 +98,14 @@
             <tr>
                <td valign="top"><label for="descripcion"><g:message code="descripcion" default="Enfermedad Actual:" /></label></td>
                <td valign="top"><g:encodeAs codec="NL2BR">${descripcionCaso}</g:encodeAs></td>
-            </tr>              
+            </tr>
+            <g:if test="${listaDeArchivos}">
+            <tr>
+               <td valign="top"><label for="archivos"><g:message code="archivos" default="Archivos Cargados:" /></label></td>                 
+               <td valign="top"><g:each in="${listaDeArchivos}" var="archivo">${archivo}<br/></g:each></td>
+                <g:hiddenField name="listaDeArchivos" value="${listaDeArchivos}" />
+            </tr>
+            </g:if>
          </tbody>
       </table>   
 
@@ -120,8 +128,12 @@
                     <g:actionSubmit action="enviarCaso" value="Enviar caso" class="boton1" onclick="return confirm('${message(code: 'default.button.send.sos.confirm.message', default: 'Esta seguro?')}');"/>
                  
 <g:link controller="records" action="list" class="boton1"><g:message code="trauma.show.action.back.chose"  /></g:link>                    
-    </div>
+
+<!--<g:link controller="triaje" action="importar" class="boton1"><g:message code="default.button.cargar.archivo"  /></g:link>  -->                       
+</g:form>    
+
+</div>
 </div>    
-</g:form>
+  
   </body>
 </html>

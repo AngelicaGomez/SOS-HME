@@ -23,7 +23,9 @@ class TriajeController {
     static String uuid = ConfigurationHolder.config.centroSOS.id
     public PojoCasoResuelto thisCasoResuelto
     public PojoMedico thisResponsable
-//    List<String> archivosSubidos = new ArrayList<String>();
+    static def mapArchivoPorCasos= [:]
+    
+def triajeService
     
     def index = {      
     }
@@ -31,6 +33,10 @@ class TriajeController {
     def viewPreEnvioCaso ={
         
     }
+    
+    def importar = {
+        render (view:'importar', model:[episodioId:params.id])
+    }    
     
     //METODO PARA MOSTRAR LOS CASOS CERRADOS
     def viewCasoResuelto ={
@@ -115,7 +121,21 @@ class TriajeController {
         //SERVICIO PARA MOSTRAR EN SOS-HME LAS ESPECIALIDADES SEGUN ESPECIALISTAS DISPONIBLES EN SOS-TRIAJE
         especialidadList = customSecureServiceClientTriaje.getEspecialidades(uuid)
         
-        render(view:"viewPreEnvioCaso",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso])        
+        List<String> nombresDeArchivos = new ArrayList<String>()
+        
+        mapArchivoPorCasos.each{
+            if(it.value==episodioId){
+                nombresDeArchivos.add(it.key)
+            }
+        }
+        
+        if(patient){
+            render(view:"viewPreEnvioCaso",model:[enfermedadActual:enfermedadActual, episodioId:episodioId, id:params.id, esp:especialidadList, patient:patient, descripcionCaso:descripcionCaso, listaDeArchivos:nombresDeArchivos])        
+        }else{
+            String tipo = "sinPacienteDelCaso"
+            redirect( controller: 'records', action: 'show', id: session.traumaContext?.episodioId, params:[tipo:tipo])
+            return 
+        }
      }
     
     //METODO PARA OBTENER LOS DATOS DE LA VISTA PREVIEW DEL CASO A ENVIAR, CREAR EL POJOCASO Y USAR EL SERVICIO PARA ENVIAR EL CASO A SOS-TRIAJE
@@ -126,7 +146,8 @@ class TriajeController {
         String apellidoPaciente = ""
         
         List<String> strinFechaNacimiento = new ArrayList<String>();
-
+        List<PojoArchivo> archivosCargados = new ArrayList<PojoArchivo>();
+        
          nombrePaciente = params.primerNombre+" "+params.segundoNombre
          apellidoPaciente = params.primerApellido+" "+params.segundoApellido
          
@@ -174,23 +195,34 @@ class TriajeController {
             paciente.setNacionalidad(nacionalidad)
             paciente.setFechaNacimiento(fechaNacimiento)
 
-        // //Se abre el archivo
-        // File txt = new File("C:/hola.txt")
-        //// render txt.getBytes().toString()
-        //
-        // PojoArchivo archivo = new PojoArchivo()
-        // archivo.setNombre("hola.txt")
-        // archivo.setDescripcion("prueba de archivo")
-        // archivo.setAdjunto(txt.getBytes())
-        //
-        // List<PojoArchivo> archivos = new ArrayList<PojoArchivo>();
-        // archivos.add(archivo)
-        //
-        //// byte[] bytes = archivo.getBytes()
+
+        //Archivos
+        if(params.listaDeArchivos){    
+            List<String> nombreArchivos = new ArrayList<String>()
+        
+            mapArchivoPorCasos.each{
+                if(it.value==params.episodioId){
+                    nombreArchivos.add(it.key)
+                }
+            }
+
+            def webRootDir = servletContext.getRealPath("/")  
+        
+            nombreArchivos.each{
+            File txt = new File(webRootDir+"/cargarArchivosSosTriaje/"+it) 
+        
+            PojoArchivo archivo = new PojoArchivo()
+            archivo.setNombre(it)
+            archivo.setDescripcion("Archivo del caso: "+params.episodioId+" , paciente: "+nombrePaciente+" "+apellidoPaciente)
+            archivo.setAdjunto(txt.getBytes())      
+
+            archivosCargados.add(archivo)
+            } 
+        }        
         
         PojoCaso caso = new PojoCaso()
             caso.setIdCasoSOS(params.episodioId)
-            caso.archivos = null
+            caso.archivos = archivosCargados
             if(especialidades){
                 caso.especialidad = especialidades
             }else{
@@ -199,7 +231,7 @@ class TriajeController {
             
             caso.setPaciente(paciente)
             caso.setDescripcion(params.descripcionCaso)
-        
+            
         //SERVICIO PARA VERIFICAR SI EL CASO QUE SE INTENTA ENVIAR A SOS-TRIAJE YA HA SIDO ENVIADO        
         boolean enviado = customSecureServiceClientTriaje.ifCaseSent(params.episodioId, uuid)
         
@@ -222,10 +254,6 @@ class TriajeController {
                 }
         }
    }
-   
-    def importar = {
-        
-    }
     
     def archivo = {
         def webRootDir = servletContext.getRealPath("/")        
@@ -240,19 +268,29 @@ class TriajeController {
     def importarArchivos = {
         // se recupera el archivo en la varible archivo (fileName), que es el nombre del imput file del gsp
         def archivo= request.getFile('fileName')
-          // se crea el directorio en la ruta donde esta la aplicacion y se agrega la carpeta cargarArchivos
-        def webRootDir = servletContext.getRealPath("/")        
-        def userDir = new File(webRootDir, "/cargarArchivosSosTriaje")
-        userDir.mkdirs()
-        // se guarda el archivo en esa carpeta
-        archivo.transferTo( new File( userDir, archivo.originalFilename))
-        // para obtener el apth del archivo
-        String file=userDir.toString()+ File.separator + archivo.originalFilename
-        // se agrega el nombre del archivo a una lista en caso de querer imprimir el nombre
-        ArrayList nomArchivo=new ArrayList()
-        nomArchivo.add(archivo.originalFilename)
-        // se regresa la lista a un gsp
+        if (archivo.originalFilename){
+            // se crea el directorio en la ruta donde esta la aplicacion y se agrega la carpeta cargarArchivos
+            def webRootDir = servletContext.getRealPath("/")        
+            def userDir = new File(webRootDir, "/cargarArchivosSosTriaje")
+            userDir.mkdirs()
+            // se guarda el archivo en esa carpeta
+            archivo.transferTo( new File( userDir, archivo.originalFilename))
+            // para obtener el apth del archivo
+            String file=userDir.toString()+ File.separator + archivo.originalFilename
+            // se agrega el nombre del archivo a una lista en caso de querer imprimir el nombre
+            ArrayList nomArchivo=new ArrayList()
+            nomArchivo.add(archivo.originalFilename)
+
+            //lleno el mapa con el id del episodio y el nombre del archivo
+            mapArchivoPorCasos.put(archivo.originalFilename, params.episodioId)
+    //        println "mapArchivoPorCasos: "+mapArchivoPorCasos
+
+            render (view:'importar', model:[nomArchivo:nomArchivo, episodioId:params.episodioId])            
+        }else{
+            flash.message = 'default.no.archive.message'
+            redirect(controller: 'triaje', action: 'importar', id:params.episodeId)
+        }
         
-        render (view:'importar', model:[nomArchivo:nomArchivo])
     }     
+    
 }

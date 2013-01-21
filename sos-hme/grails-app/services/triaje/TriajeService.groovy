@@ -3,7 +3,10 @@ package triaje
 class TriajeService {
 
     static transactional = true
-
+    
+    //Mapa de los archivos y el caso al que pertenecen
+    static mapArchivoPorCasos= [:]
+    
     List<String> mostrarCaso (List<String> newLista){
         //Lista que acumulara por centros los casos que han sido impresos
         List<String> casosImpresos = new ArrayList<String>() 
@@ -25,4 +28,12 @@ class TriajeService {
             
         return casosAImprimir
     }
+    
+    def llenarMapa(String originalFilename, String episodioId){
+         mapArchivoPorCasos.put(originalFilename, episodioId)
+         println " originalFilename: "+mapArchivoPorCasos
+         mapArchivoPorCasos.each{
+             println " originalFilename: "+it
+         }
+    }    
 }

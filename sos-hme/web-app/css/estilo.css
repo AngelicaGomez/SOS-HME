@@ -770,4 +770,45 @@ label#errorms {
 	
 	}
 	
-       
+/*Agregado por Angelica Gomez*/
+.form2 {
+	}
+.form2 .boton_submit2 {
+		display:inline-block;
+		font-size:14px;
+		color:#3f3f3f;
+	padding: 7px 15px;
+	background:#f5cb59 url(../images/bkg_boton1.gif) repeat-x;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4e2b3), to(#f5c645));
+    background-image: -webkit-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -moz-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -ms-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -o-linear-gradient(top, #f4e2b3, #f5c645);
+	color:#3f3f3f;
+	border:solid 1px #dddddd;
+	text-decoration:none;
+	margin: 0px;
+        margin-bottom:0px; 
+	} 
+div.fileinputs {
+	position: relative;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+div.fakefile .tamanio{
+        width: 260px;
+        height: 20px;
+}
+
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	opacity: 0;
+	z-index: 2;
+}

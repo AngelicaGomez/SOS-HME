@@ -10,7 +10,6 @@ class GetCasoCerradoJob {
     def customSecureServiceClientTriaje
     
     def execute() {
-//        String uuid = "fcf22a15-6871-4469-801c-3eeecce05839"
         String uuid = ConfigurationHolder.config.centroSOS.id
 
 //        List<String> casosCerrados = customSecureServiceClientTriaje.getIdCasoCerrado(uuid)

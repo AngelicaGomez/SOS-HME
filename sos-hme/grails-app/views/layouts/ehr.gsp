@@ -601,6 +601,13 @@
                          </li>
                         <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>
                         
+                        <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>
+                         <li>                           
+                           <a href="${createLink(controller: 'triaje', action: 'importar', id:episodeId)}" onclick="return confirm('${message(code: 'default.link.send.sos.confirm.message', default: 'Esta seguro?')}');">
+                             <g:message code="Enviar a SOS-TRIAJE 2" />
+                           </a>
+                         </li>
+                        <%--Agregaro por: ANGELICA GOMEZ para enviar el caso a SOS-TRIAJE--%>                           
               </ul>
             </div>           
       <g:layoutBody />

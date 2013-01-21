@@ -465,7 +465,6 @@ def create = {
 }
     
 def show = {
-       println "AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
     // TODO: poner en sesion el episodio que se esta viendo
     println "Show: " + params
        
@@ -545,7 +544,11 @@ def show = {
                
                 if (tipo=="casoEnviadoAnteriormente"){
                     flash.message = 'default.sent.caso.message'
-                }               
+                }   
+                
+                if (tipo=="sinPacienteDelCaso"){
+                    flash.message = 'default.no.patient.caso.message'
+                }            
         }
 //------------------------------------------------------------------------------
 

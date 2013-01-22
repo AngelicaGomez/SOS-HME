@@ -29,28 +29,9 @@
       </div>
     </g:if>
   
-  
-  <!--
-<g:form name="importUser" controller="triaje" action="importarArchivos" method="post" enctype="multipart/form-data">
-  <input type="file" id="fileName" name="fileName" width="250px" style="cursor:pointer; position: relative"/>
-  
-    <g:submitButton name="importar" value="Importar" class="boton_submit2"/> 
-    <g:hiddenField name="episodioId" value="${episodioId}" />
-       -->
-        <!--
-        <g:each in="${nomArchivo}" var="archivo">
-            <p>Archivo cargado: ${archivo}</p>
-        </g:each>
-        -->
-        <!--
-<br/>
-<g:link controller="triaje" action="previewEnviarCaso" class="boton_submit2"><g:message code="Siguiente"  /></g:link>             
-</g:form>  
-  -->
-  
 <g:form name="importUser" controller="triaje" action="importarArchivos" method="post" enctype="multipart/form-data">  
   <div class="fileinputs">
-	<input type="file" class="file" id="fileName" name="fileName"/>
+	<input type="file" class="file" id="fileName" name="fileName" style="width:500px;"/>
         <g:hiddenField name="episodioId" value="${episodioId}" />
 
 	<div class="fakefile">

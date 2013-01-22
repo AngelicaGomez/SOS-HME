@@ -204,7 +204,8 @@ environments {
 }
 
 //Uuid del centro en SOS-TRIAJE
-centroSOS.id = "16ebe894-23f5-4af6-805a-3c976a9f9455"
+centroSOS.id = "0ae64c4e-8f42-4ad8-9fbc-541320a4c8c6"
+////"16ebe894-23f5-4af6-805a-3c976a9f9455"
 
 //Indice Maestro de Pacientes
 //UCV CAIBCO 

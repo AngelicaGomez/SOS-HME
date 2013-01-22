@@ -25,7 +25,7 @@
         </li>
         
         <li>
-        <g:link controller="triaje" action="viewCasoResuelto"><g:message code="NUEVO"/></g:link>
+        <g:link controller="triaje" action="viewCasoResuelto"><g:message code="Casos resueltos"/></g:link>
         </li>
       </ul>
     </div>

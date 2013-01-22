@@ -207,7 +207,6 @@ def triajeService
             }
 
             def webRootDir = servletContext.getRealPath("/")  
-        
             nombreArchivos.each{
             File txt = new File(webRootDir+"/cargarArchivosSosTriaje/"+it) 
         
@@ -257,7 +256,7 @@ def triajeService
     
     def archivo = {
         def webRootDir = servletContext.getRealPath("/")        
-//        def userDir = new File(webRootDir, "/cargarArchivosSosTriaje")
+        def userDir = new File(webRootDir, "/cargarArchivosSosTriaje")
         
          //Se abre el archivo, en la carpeta destinada para ello
          File txt = new File(webRootDir+"/cargarArchivosSosTriaje/"+"debug.txt")
@@ -283,14 +282,12 @@ def triajeService
 
             //lleno el mapa con el id del episodio y el nombre del archivo
             mapArchivoPorCasos.put(archivo.originalFilename, params.episodioId)
-    //        println "mapArchivoPorCasos: "+mapArchivoPorCasos
-
+    
             render (view:'importar', model:[nomArchivo:nomArchivo, episodioId:params.episodioId])            
         }else{
             flash.message = 'default.no.archive.message'
             redirect(controller: 'triaje', action: 'importar', id:params.episodeId)
         }
-        
     }     
     
 }

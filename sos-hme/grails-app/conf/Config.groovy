@@ -204,7 +204,7 @@ environments {
 }
 
 //Uuid del centro en SOS-TRIAJE
-centroSOS.id = "af6e64bc-6ae5-4ecf-bed4-7fe6b75cafea"
+centroSOS.id = "01ef0594-a3e7-4d6f-a67f-96a98cb2b8da"
 ////"0ae64c4e-8f42-4ad8-9fbc-541320a4c8c6"
 
 //Indice Maestro de Pacientes

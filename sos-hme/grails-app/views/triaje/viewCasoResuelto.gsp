@@ -52,21 +52,21 @@
                   <%
                   thisResponsable = thisCasoResuelto.responsable
                   %>
-                    <td>${thisCasoResuelto.idCasoSOS}</td>
+                    <td style="width:20px;">${thisCasoResuelto.idCasoSOS}</td>
                     <td style="width:340px;" class="pJustifica"><g:encodeAs codec="NL2BR">${thisCasoResuelto.opinion} </g:encodeAs></td>                      
-                    <td style="width:90px;">${thisCasoResuelto.fechaSolucion}</td>
+                    <td style="width:80px;">${thisCasoResuelto.fechaSolucion}</td>
                     <td style="width:100px;">${thisResponsable.nombre} ${thisResponsable.apellido}</td>
                     <g:if test="${thisResponsable?.colegioDeMedico==0}">
                         <td></td>
                     </g:if>
                     <g:else>
-                        <td style="width:90px;">${thisResponsable?.colegioDeMedico}</td>
+                        <td style="width:70px;">${thisResponsable?.colegioDeMedico}</td>
                     </g:else>
                     <g:if test="${thisResponsable?.ministerioDeSalud==0}">
                         <td></td>
                     </g:if>
                     <g:else>
-                        <td style="width:90px;">${thisResponsable?.ministerioDeSalud}</td>
+                        <td style="width:70px;">${thisResponsable?.ministerioDeSalud}</td>
                     </g:else>
                 </tr>
             </g:each>

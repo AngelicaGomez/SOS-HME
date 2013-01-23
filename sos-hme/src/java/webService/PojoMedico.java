@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="colegioDeMedico" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="ministerioDeSalud" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="colegioDeMedico" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="ministerioDeSalud" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "pojoMedico", namespace = "http://triaje/", propOrder = {
+@XmlType(name = "pojoMedico", propOrder = {
     "nombre",
     "apellido",
     "colegioDeMedico",
@@ -37,10 +37,10 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PojoMedico {
 
-    protected String nombre;
-    protected String apellido;
-    protected int colegioDeMedico;
-    protected int ministerioDeSalud;
+    private String nombre;
+    private String apellido;
+    private Integer colegioDeMedico;
+    private Integer ministerioDeSalud;
 
     /**
      * Obtiene el valor de la propiedad nombre.
@@ -93,32 +93,48 @@ public class PojoMedico {
     /**
      * Obtiene el valor de la propiedad colegioDeMedico.
      * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public int getColegioDeMedico() {
+    public Integer getColegioDeMedico() {
         return colegioDeMedico;
     }
 
     /**
      * Define el valor de la propiedad colegioDeMedico.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
      */
-    public void setColegioDeMedico(int value) {
+    public void setColegioDeMedico(Integer value) {
         this.colegioDeMedico = value;
     }
 
     /**
      * Obtiene el valor de la propiedad ministerioDeSalud.
      * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public int getMinisterioDeSalud() {
+    public Integer getMinisterioDeSalud() {
         return ministerioDeSalud;
     }
 
     /**
      * Define el valor de la propiedad ministerioDeSalud.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
      */
-    public void setMinisterioDeSalud(int value) {
+    public void setMinisterioDeSalud(Integer value) {
         this.ministerioDeSalud = value;
     }
 

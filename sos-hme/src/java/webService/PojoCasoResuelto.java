@@ -1,8 +1,11 @@
 
 package webService;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -17,8 +20,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="idCasoSOS" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="responsable" type="{http://triaje/}pojoMedico" minOccurs="0"/>
+ *         &lt;element name="responsable" type="{http://webService/}pojoMedico" minOccurs="0"/>
  *         &lt;element name="opinion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="archivos" type="{http://webService/}pojoArchivo" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="fechaSolucion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -29,18 +33,21 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "pojoCasoResuelto", namespace = "http://triaje/", propOrder = {
+@XmlType(name = "pojoCasoResuelto", propOrder = {
     "idCasoSOS",
     "responsable",
     "opinion",
+    "archivos",
     "fechaSolucion"
 })
 public class PojoCasoResuelto {
 
-    protected String idCasoSOS;
-    protected PojoMedico responsable;
-    protected String opinion;
-    protected String fechaSolucion;
+    private String idCasoSOS;
+    private PojoMedico responsable;
+    private String opinion;
+    @XmlElement(nillable = true)
+    private List<PojoArchivo> archivos;
+    private String fechaSolucion;
 
     /**
      * Obtiene el valor de la propiedad idCasoSOS.
@@ -115,6 +122,35 @@ public class PojoCasoResuelto {
     }
 
     /**
+     * Gets the value of the archivos property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the archivos property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getArchivos().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link PojoArchivo }
+     * 
+     * 
+     */
+    public List<PojoArchivo> getArchivos() {
+        if (archivos == null) {
+            archivos = new ArrayList<PojoArchivo>();
+        }
+        return this.archivos;
+    }
+
+    /**
      * Obtiene el valor de la propiedad fechaSolucion.
      * 
      * @return
@@ -136,6 +172,13 @@ public class PojoCasoResuelto {
      */
     public void setFechaSolucion(String value) {
         this.fechaSolucion = value;
+    }
+
+    /**
+     * @param archivos the archivos to set
+     */
+    public void setArchivos(List<PojoArchivo> archivos) {
+        this.archivos = archivos;
     }
 
 }

@@ -1,0 +1,51 @@
+//SERVICIO PARA ENVIAR EL CASO RESUELTO A SOS-HME
+    PojoResultadoClinico getCasoResuelto(String idCasoSOS){
+        //OPERACIONES PARA OBTENER EL CASO RESUELTO        
+        List<PojoArchivo> archivosCasoResuelto = new ArrayList<PojoArchivo>();
+                def casoInstance = Caso.findByIdCasoSOS(idCasoSOS)
+                def archivos = Archivo.findAllByCaso(casoInstance)
+                
+//                println "archivos: "+archivos+" clase "+archivos.class
+                
+                if(archivos){
+                    archivos.each{          
+                        PojoArchivo archivosAEnviar = new PojoArchivo()  
+                            archivosAEnviar.nombre = it.nombre
+                            archivosAEnviar.descripcion = it.descripcion
+                            archivosAEnviar.adjunto = it.adjunto
+                            archivosCasoResuelto.add(archivosAEnviar)   
+                            
+//                            println "archivosCasoResuelto "+archivosCasoResuelto+" clase "+archivosCasoResuelto.class
+                    }
+                }        
+
+                //Ultima opinion del caso, tiene consigo el medico quien emitio la opinion
+                def opinionInstance = Opinion.findAllByCaso(casoInstance, [sort: "fechaOpinion", order: "desc"])
+                    opinionInstance=opinionInstance.first()            
+                    String Opinion = opinionInstance.cuerpoOpinion
+
+                SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd")
+                String fechaSolucion = fecha.format(casoInstance.fechaSolucion)
+
+                    //Medico que emitio la solucion al caso   
+                    PojoMedico medicoCaso = new PojoMedico()
+                        medicoCaso.nombre = opinionInstance.medico.nombre
+                        medicoCaso.apellido = opinionInstance.medico.apellido
+
+                        if (opinionInstance.medico.numColegioMedico){
+                            medicoCaso.colegioDeMedico = opinionInstance.medico.numColegioMedico
+                        }   
+                        if (opinionInstance.medico.numMinisterioSalud){
+                            medicoCaso.ministerioDeSalud = opinionInstance.medico.numMinisterioSalud
+                        }            
+           
+                PojoResultadoClinico resultadoClinico = new PojoResultadoClinico()
+                    resultadoClinico.idCasoSOS = idCasoSOS
+                    resultadoClinico.opinion = Opinion
+                    resultadoClinico.responsable = medicoCaso         
+                    resultadoClinico.fechaSolucion = fechaSolucion
+                    resultadoClinico.archivosClinicos = archivosCasoResuelto
+            
+        println "PojoResultadoClinico "+PojoResultadoClinico+" clase "+PojoResultadoClinico.class
+        return PojoResultadoClinico
+    }  

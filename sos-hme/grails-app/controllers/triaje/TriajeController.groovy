@@ -12,7 +12,6 @@ import archetype_repository.ArchetypeManager
 import hce.core.common.archetyped.Locatable
 import webService.PojoCasoResuelto
 import webService.PojoMedico
-//import demographic.party
 import org.codehaus.groovy.grails.commons.*
 
 class TriajeController {
@@ -23,9 +22,11 @@ class TriajeController {
     static String uuid = ConfigurationHolder.config.centroSOS.id
     public PojoCasoResuelto thisCasoResuelto
     public PojoMedico thisResponsable
+    public List<PojoArchivo> thisArchivos
     static def mapArchivoPorCasos= [:]
+    static def mapArchivoCasosResueltos= [:]
     
-def triajeService
+    def triajeService
     
     def index = {      
     }
@@ -54,15 +55,23 @@ def triajeService
                    
                     this.thisResponsable = thisCasoResuelto.responsable
 
-//                    println "DETALLE DEL CASO: "
-//                    println "CASO: "+thisCasoResuelto.idCasoSOS
-//                    println "MEDICO RESPONSABLE: "+thisResponsable.nombre+" "+thisResponsable.apellido
-//                    println "SOLUCION AL CASO: "+thisCasoResuelto.opinion
-//                    println "FECHA DE SOLUCION: "+thisCasoResuelto.fechaSolucion
-//
+                    this.thisArchivos = thisCasoResuelto.archivos
+                    println "thisArchivos "+thisArchivos
+                    
+                    
+//                    println "thisArchivos adjunto "+thisArchivos.adjunto
+                        if (thisArchivos){
+                            int j=0;
+                            while (j< thisArchivos.size())
+                            {
+                                mapArchivoCasosResueltos.put(thisArchivos.get(j).nombre, thisArchivos.get(j).adjunto)
+                                j++;
+                            }
+                        }                
+                
                     casosParaMostrar.add(thisCasoResuelto)
                     
-                    render(view: "viewCasoResuelto", model: [casoInstanceList: casosCerrados, responsable:thisResponsable, caso:thisCasoResuelto, casoMostrado:casosParaMostrar]) 
+                    render(view: "viewCasoResuelto", model: [casoInstanceList: casosCerrados, responsable:thisResponsable, caso:thisCasoResuelto, casoMostrado:casosParaMostrar, archivos:thisArchivos]) 
                 } 
        }    
      }
@@ -279,15 +288,27 @@ def triajeService
             // se agrega el nombre del archivo a una lista en caso de querer imprimir el nombre
             ArrayList nomArchivo=new ArrayList()
             nomArchivo.add(archivo.originalFilename)
-
             //lleno el mapa con el id del episodio y el nombre del archivo
             mapArchivoPorCasos.put(archivo.originalFilename, params.episodioId)
-    
             render (view:'importar', model:[nomArchivo:nomArchivo, episodioId:params.episodioId])            
         }else{
             flash.message = 'default.no.archive.message'
-            redirect(controller: 'triaje', action: 'importar', id:params.episodeId)
+            render (view:'importar', model:[episodioId:params.episodioId])
         }
-    }     
+    } 
+
+    def showArchivoSeleccionado = {
+        println " adjunto 3 "+params.id+" clase "+params.id.class
+
+        mapArchivoCasosResueltos.each{
+            if(it.key==params.id){                
+                response.setContentLength(it.value.size())
+                OutputStream out = response.getOutputStream()
+                out.write(it.value)
+                out.close()  
+            }
+          
+        }
+    }    
     
 }

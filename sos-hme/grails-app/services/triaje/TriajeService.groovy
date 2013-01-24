@@ -35,5 +35,23 @@ class TriajeService {
          mapArchivoPorCasos.each{
              println " originalFilename: "+it
          }
-    }    
+    }
+
+    boolean escribirArchivo(byte[] fileBytes, String archivoDestino){ 
+    def webRootDir = servletContext.getRealPath("/")        
+    def userDir = new File(webRootDir, "/cargarArchivosSosTriaje/"+archivoDestino)
+    userDir.mkdirs()
+            
+        boolean correcto = false; 
+            try { 
+                OutputStream out = new FileOutputStream(userDir); 
+                out.write(fileBytes); 
+                out.close();         
+                correcto = true; 
+            } catch (Exception e) { 
+                e.printStackTrace(); 
+            }         
+            return correcto;
+    }
+    
 }

@@ -37,10 +37,10 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PojoMedico {
 
-    private String nombre;
-    private String apellido;
-    private Integer colegioDeMedico;
-    private Integer ministerioDeSalud;
+    protected String nombre;
+    protected String apellido;
+    protected Integer colegioDeMedico;
+    protected Integer ministerioDeSalud;
 
     /**
      * Obtiene el valor de la propiedad nombre.

@@ -99,6 +99,7 @@
                <td valign="top"><label for="descripcion"><g:message code="descripcion" default="Enfermedad Actual:" /></label></td>
                <td valign="top"><g:encodeAs codec="NL2BR">${descripcionCaso}</g:encodeAs></td>
             </tr>
+            <tr><td><br/></td></tr>
             <g:if test="${listaDeArchivos}">
             <tr>
                <td valign="top"><label for="archivos"><g:message code="archivos" default="Archivos Cargados:" /></label></td>                 

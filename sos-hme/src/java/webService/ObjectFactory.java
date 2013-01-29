@@ -24,22 +24,74 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GetIdCasosEnviados_QNAME = new QName("http://webService/", "getIdCasosEnviados");
+    private final static QName _GetIdCasosEnviadosResponse_QNAME = new QName("http://webService/", "getIdCasosEnviadosResponse");
+    private final static QName _GetSeguimientoDelCaso_QNAME = new QName("http://webService/", "getSeguimientoDelCaso");
+    private final static QName _EnviarCasoTriaje_QNAME = new QName("http://webService/", "enviarCasoTriaje");
+    private final static QName _EnviarCasoTriajeResponse_QNAME = new QName("http://webService/", "enviarCasoTriajeResponse");
+    private final static QName _GetIdCasoCerradoResponse_QNAME = new QName("http://webService/", "getIdCasoCerradoResponse");
     private final static QName _IfCaseSent_QNAME = new QName("http://webService/", "ifCaseSent");
     private final static QName _GetEspecialidadesResponse_QNAME = new QName("http://webService/", "getEspecialidadesResponse");
     private final static QName _GetIdCasoCerrado_QNAME = new QName("http://webService/", "getIdCasoCerrado");
     private final static QName _IfCaseSentResponse_QNAME = new QName("http://webService/", "ifCaseSentResponse");
-    private final static QName _EnviarCasoTriaje_QNAME = new QName("http://webService/", "enviarCasoTriaje");
-    private final static QName _EnviarCasoTriajeResponse_QNAME = new QName("http://webService/", "enviarCasoTriajeResponse");
     private final static QName _GetEspecialidades_QNAME = new QName("http://webService/", "getEspecialidades");
     private final static QName _GetCasoResuelto_QNAME = new QName("http://webService/", "getCasoResuelto");
-    private final static QName _GetIdCasoCerradoResponse_QNAME = new QName("http://webService/", "getIdCasoCerradoResponse");
     private final static QName _GetCasoResueltoResponse_QNAME = new QName("http://webService/", "getCasoResueltoResponse");
+    private final static QName _GetSeguimientoDelCasoResponse_QNAME = new QName("http://webService/", "getSeguimientoDelCasoResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: webService
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link GetIdCasosEnviados }
+     * 
+     */
+    public GetIdCasosEnviados createGetIdCasosEnviados() {
+        return new GetIdCasosEnviados();
+    }
+
+    /**
+     * Create an instance of {@link GetIdCasosEnviadosResponse }
+     * 
+     */
+    public GetIdCasosEnviadosResponse createGetIdCasosEnviadosResponse() {
+        return new GetIdCasosEnviadosResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetSeguimientoDelCaso }
+     * 
+     */
+    public GetSeguimientoDelCaso createGetSeguimientoDelCaso() {
+        return new GetSeguimientoDelCaso();
+    }
+
+    /**
+     * Create an instance of {@link EnviarCasoTriaje }
+     * 
+     */
+    public EnviarCasoTriaje createEnviarCasoTriaje() {
+        return new EnviarCasoTriaje();
+    }
+
+    /**
+     * Create an instance of {@link EnviarCasoTriajeResponse }
+     * 
+     */
+    public EnviarCasoTriajeResponse createEnviarCasoTriajeResponse() {
+        return new EnviarCasoTriajeResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetIdCasoCerradoResponse }
+     * 
+     */
+    public GetIdCasoCerradoResponse createGetIdCasoCerradoResponse() {
+        return new GetIdCasoCerradoResponse();
     }
 
     /**
@@ -91,19 +143,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EnviarCasoTriajeResponse }
+     * Create an instance of {@link GetSeguimientoDelCasoResponse }
      * 
      */
-    public EnviarCasoTriajeResponse createEnviarCasoTriajeResponse() {
-        return new EnviarCasoTriajeResponse();
-    }
-
-    /**
-     * Create an instance of {@link EnviarCasoTriaje }
-     * 
-     */
-    public EnviarCasoTriaje createEnviarCasoTriaje() {
-        return new EnviarCasoTriaje();
+    public GetSeguimientoDelCasoResponse createGetSeguimientoDelCasoResponse() {
+        return new GetSeguimientoDelCasoResponse();
     }
 
     /**
@@ -112,14 +156,6 @@ public class ObjectFactory {
      */
     public GetCasoResueltoResponse createGetCasoResueltoResponse() {
         return new GetCasoResueltoResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetIdCasoCerradoResponse }
-     * 
-     */
-    public GetIdCasoCerradoResponse createGetIdCasoCerradoResponse() {
-        return new GetIdCasoCerradoResponse();
     }
 
     /**
@@ -155,6 +191,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PojoSeguimientoCaso }
+     * 
+     */
+    public PojoSeguimientoCaso createPojoSeguimientoCaso() {
+        return new PojoSeguimientoCaso();
+    }
+
+    /**
      * Create an instance of {@link PojoEspecialidad }
      * 
      */
@@ -168,6 +212,68 @@ public class ObjectFactory {
      */
     public PojoCaso createPojoCaso() {
         return new PojoCaso();
+    }
+
+    /**
+     * Create an instance of {@link PojoOpinion }
+     * 
+     */
+    public PojoOpinion createPojoOpinion() {
+        return new PojoOpinion();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetIdCasosEnviados }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getIdCasosEnviados")
+    public JAXBElement<GetIdCasosEnviados> createGetIdCasosEnviados(GetIdCasosEnviados value) {
+        return new JAXBElement<GetIdCasosEnviados>(_GetIdCasosEnviados_QNAME, GetIdCasosEnviados.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetIdCasosEnviadosResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getIdCasosEnviadosResponse")
+    public JAXBElement<GetIdCasosEnviadosResponse> createGetIdCasosEnviadosResponse(GetIdCasosEnviadosResponse value) {
+        return new JAXBElement<GetIdCasosEnviadosResponse>(_GetIdCasosEnviadosResponse_QNAME, GetIdCasosEnviadosResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSeguimientoDelCaso }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getSeguimientoDelCaso")
+    public JAXBElement<GetSeguimientoDelCaso> createGetSeguimientoDelCaso(GetSeguimientoDelCaso value) {
+        return new JAXBElement<GetSeguimientoDelCaso>(_GetSeguimientoDelCaso_QNAME, GetSeguimientoDelCaso.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriaje }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriaje")
+    public JAXBElement<EnviarCasoTriaje> createEnviarCasoTriaje(EnviarCasoTriaje value) {
+        return new JAXBElement<EnviarCasoTriaje>(_EnviarCasoTriaje_QNAME, EnviarCasoTriaje.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriajeResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriajeResponse")
+    public JAXBElement<EnviarCasoTriajeResponse> createEnviarCasoTriajeResponse(EnviarCasoTriajeResponse value) {
+        return new JAXBElement<EnviarCasoTriajeResponse>(_EnviarCasoTriajeResponse_QNAME, EnviarCasoTriajeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetIdCasoCerradoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getIdCasoCerradoResponse")
+    public JAXBElement<GetIdCasoCerradoResponse> createGetIdCasoCerradoResponse(GetIdCasoCerradoResponse value) {
+        return new JAXBElement<GetIdCasoCerradoResponse>(_GetIdCasoCerradoResponse_QNAME, GetIdCasoCerradoResponse.class, null, value);
     }
 
     /**
@@ -207,24 +313,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriaje }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriaje")
-    public JAXBElement<EnviarCasoTriaje> createEnviarCasoTriaje(EnviarCasoTriaje value) {
-        return new JAXBElement<EnviarCasoTriaje>(_EnviarCasoTriaje_QNAME, EnviarCasoTriaje.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriajeResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriajeResponse")
-    public JAXBElement<EnviarCasoTriajeResponse> createEnviarCasoTriajeResponse(EnviarCasoTriajeResponse value) {
-        return new JAXBElement<EnviarCasoTriajeResponse>(_EnviarCasoTriajeResponse_QNAME, EnviarCasoTriajeResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetEspecialidades }{@code >}}
      * 
      */
@@ -243,21 +331,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetIdCasoCerradoResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://webService/", name = "getIdCasoCerradoResponse")
-    public JAXBElement<GetIdCasoCerradoResponse> createGetIdCasoCerradoResponse(GetIdCasoCerradoResponse value) {
-        return new JAXBElement<GetIdCasoCerradoResponse>(_GetIdCasoCerradoResponse_QNAME, GetIdCasoCerradoResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetCasoResueltoResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://webService/", name = "getCasoResueltoResponse")
     public JAXBElement<GetCasoResueltoResponse> createGetCasoResueltoResponse(GetCasoResueltoResponse value) {
         return new JAXBElement<GetCasoResueltoResponse>(_GetCasoResueltoResponse_QNAME, GetCasoResueltoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSeguimientoDelCasoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "getSeguimientoDelCasoResponse")
+    public JAXBElement<GetSeguimientoDelCasoResponse> createGetSeguimientoDelCasoResponse(GetSeguimientoDelCasoResponse value) {
+        return new JAXBElement<GetSeguimientoDelCasoResponse>(_GetSeguimientoDelCasoResponse_QNAME, GetSeguimientoDelCasoResponse.class, null, value);
     }
 
 }

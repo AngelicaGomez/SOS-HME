@@ -42,12 +42,12 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PojoCasoResuelto {
 
-    private String idCasoSOS;
-    private PojoMedico responsable;
-    private String opinion;
+    protected String idCasoSOS;
+    protected PojoMedico responsable;
+    protected String opinion;
     @XmlElement(nillable = true)
-    private List<PojoArchivo> archivos;
-    private String fechaSolucion;
+    protected List<PojoArchivo> archivos;
+    protected String fechaSolucion;
 
     /**
      * Obtiene el valor de la propiedad idCasoSOS.
@@ -172,13 +172,6 @@ public class PojoCasoResuelto {
      */
     public void setFechaSolucion(String value) {
         this.fechaSolucion = value;
-    }
-
-    /**
-     * @param archivos the archivos to set
-     */
-    public void setArchivos(List<PojoArchivo> archivos) {
-        this.archivos = archivos;
     }
 
 }

@@ -4,6 +4,8 @@ import webService.PojoEspecialidad
 import webService.PojoPaciente
 import webService.PojoArchivo
 import webService.PojoCaso
+import webService.PojoSeguimientoCaso
+import webService.PojoOpinion
 
 import hce.core.composition.*
 import hce.HceService
@@ -21,8 +23,11 @@ class TriajeController {
     def customSecureServiceClientTriaje
     static String uuid = ConfigurationHolder.config.centroSOS.id
     public PojoCasoResuelto thisCasoResuelto
+    public PojoSeguimientoCaso thisCasoSeguimiento
     public PojoMedico thisResponsable
     public List<PojoArchivo> thisArchivos
+    public List<PojoArchivo> thisArchivosSeguimiento
+    public List<PojoOpinion> thisOpinionesSeguimiento
     static def mapArchivoPorCasos= [:]
     static def mapArchivoCasosResueltos= [:]
     
@@ -76,6 +81,42 @@ class TriajeController {
        }    
      }
     
+//    //METODO PARA MOSTRAR EL SEGUIMIENTO DE LOS CASOS
+    def viewSeguimientoCaso={
+        List<String> casosParaMostrarSeguimiento = new ArrayList<String>();
+        List<String> casosTratados = new ArrayList<String>();
+        
+        casosTratados = customSecureServiceClientTriaje.getIdCasosEnviados(uuid)
+                
+        if(casosTratados){
+              casosTratados.each{
+                  
+                    println "CASO TRAMITADO CORRECTAMENTE: "+it
+                    
+                    this.thisCasoSeguimiento = customSecureServiceClientTriaje.getSeguimientoDelCaso(it)
+                   
+                    this.thisOpinionesSeguimiento = thisCasoSeguimiento.opiniones
+                    println "opiniones: "+thisOpinionesSeguimiento
+
+                    this.thisArchivosSeguimiento = thisCasoSeguimiento.archivos                   
+                    
+//                    println "thisArchivos adjunto "+thisArchivos.adjunto
+                        if (thisArchivosSeguimiento){
+                            int j=0;
+                            while (j< thisArchivosSeguimiento.size())
+                            {
+                                mapArchivoCasosResueltos.put(thisArchivosSeguimiento.get(j).nombre, thisArchivosSeguimiento.get(j).adjunto)
+                                j++;
+                            }
+                        }                
+                
+                    casosParaMostrarSeguimiento.add(thisCasoSeguimiento)
+                    
+                    render(view: "viewCasoSeguimiento", model: [casoInstanceList: casosTratados, caso:thisCasoSeguimiento, casoMostrado:casosParaMostrarSeguimiento, archivos:thisArchivosSeguimiento, opiniones: thisOpinionesSeguimiento]) 
+                } 
+       }    
+     }    
+    
     //METODO PARA GENERAR VISTA DEL PREVIEW DEL CASO A ENVIAR
      def previewEnviarCaso = {
         def rmNode
@@ -100,22 +141,20 @@ class TriajeController {
             
             def k=0 // variable de ciclo, usada en caso de que la composition tenga varios 
             def j=0
-            if (k==(k+1)){
-               j=0
-            }
             
             def element = rmNodeDataEvents[0].data.items.items[0].items
-          
+           
                 while(element[k]!=null){   
-                   enfermedadActual = true
                    while(element[k][j]!=null){
 
                      descripcionCaso = descripcionCaso + element[k][j].name.value+": "+element[k][j].value.value + pausa + "\n"
-                 
+
                     j++
                    }
-                k++
-                }      
+                   k++
+                   j=0
+                   descripcionCaso = descripcionCaso+"\n"
+                }    
         }      
         else{
             if(!descripcionCaso){

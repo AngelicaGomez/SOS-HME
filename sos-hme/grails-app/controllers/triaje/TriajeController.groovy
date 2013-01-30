@@ -112,7 +112,7 @@ class TriajeController {
                 
                     casosParaMostrarSeguimiento.add(thisCasoSeguimiento)
                     
-                    render(view: "viewCasoSeguimiento", model: [casoInstanceList: casosTratados, caso:thisCasoSeguimiento, casoMostrado:casosParaMostrarSeguimiento, archivos:thisArchivosSeguimiento, opiniones: thisOpinionesSeguimiento]) 
+                    render(view: "viewSeguimientoCaso", model: [casoInstanceList: casosTratados, caso:thisCasoSeguimiento, casoMostrado:casosParaMostrarSeguimiento, archivos:thisArchivosSeguimiento, opiniones: thisOpinionesSeguimiento]) 
                 } 
        }    
      }    

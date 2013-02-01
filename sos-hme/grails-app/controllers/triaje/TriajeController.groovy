@@ -6,14 +6,15 @@ import webService.PojoArchivo
 import webService.PojoCaso
 import webService.PojoSeguimientoCaso
 import webService.PojoOpinion
+import webService.PojoObservacion
+import webService.PojoCasoResuelto
+import webService.PojoMedico
 
 import hce.core.composition.*
 import hce.HceService
 import templates.TemplateManager
 import archetype_repository.ArchetypeManager
 import hce.core.common.archetyped.Locatable
-import webService.PojoCasoResuelto
-import webService.PojoMedico
 import org.codehaus.groovy.grails.commons.*
 
 class TriajeController {
@@ -61,7 +62,7 @@ class TriajeController {
                     this.thisResponsable = thisCasoResuelto.responsable
 
                     this.thisArchivos = thisCasoResuelto.archivos
-                    println "thisArchivos "+thisArchivos
+//                    println "thisArchivos "+thisArchivos
                     
                     
 //                    println "thisArchivos adjunto "+thisArchivos.adjunto
@@ -111,6 +112,9 @@ class TriajeController {
                         }                
                 
                     casosParaMostrarSeguimiento.add(thisCasoSeguimiento)
+//                    println "this caso seguimiento: "+thisCasoSeguimiento
+                    
+//                    println "this opiniones del seguimeinto: "+thisOpinionesSeguimiento.cuerpoOpinion
                     
                     render(view: "viewSeguimientoCaso", model: [casoInstanceList: casosTratados, caso:thisCasoSeguimiento, casoMostrado:casosParaMostrarSeguimiento, archivos:thisArchivosSeguimiento, opiniones: thisOpinionesSeguimiento]) 
                 } 
@@ -337,7 +341,7 @@ class TriajeController {
     } 
 
     def showArchivoSeleccionado = {
-        println " adjunto 3 "+params.id+" clase "+params.id.class
+//        println " adjunto 3 "+params.id+" clase "+params.id.class
 
         mapArchivoCasosResueltos.each{
             if(it.key==params.id){                
@@ -350,4 +354,38 @@ class TriajeController {
         }
     }    
     
+    //METODO PARA GENERAR VISTA DEL PREVIEW DEL SEGUIMIENTO DE LOS CASOS
+     def previewEnvioObservacionCaso = {
+         
+//        println "caso a enviar por observacion: "+params.id+" clase "+params.id.class
+         
+        render(view:"viewEnvioObservacionCaso",model:[id:params.id])                
+     }    
+     
+    
+    def enviarObservacion = {
+        String idCasoObservacion = params.id
+        String observacion = params.observacion
+         
+       
+        if(params.observacion){
+            PojoObservacion observacionDelCaso = new PojoObservacion()
+                observacionDelCaso.setIdCasoObservacion(idCasoObservacion)
+                observacionDelCaso.setObservacion(observacion)
+
+                
+                //SERVICIO PARA ENVIAR LA OBSERVACION DEL CASO A SOS-TRIAJE DESDE SOS-HME
+                boolean answerObservacion = customSecureServiceClientTriaje.enviarObservacionTriaje(observacionDelCaso, uuid) 
+//                boolean answerObservacion = enviarObservacionTriaje(idCasoObservacion, observacion, uuid)
+                
+                if (boolean){
+                    flash.message = 'default.observation.sent.message'
+                    redirect( controller: 'triaje', action: 'viewSeguimientoCaso')                    
+                }else{
+                    redirect( controller: 'triaje', action: 'viewSeguimientoCaso')
+                    flash.message = 'default.observation.no.sent.message'
+                }
+            
+        }
+    }
 }

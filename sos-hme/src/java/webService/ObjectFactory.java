@@ -27,8 +27,10 @@ public class ObjectFactory {
     private final static QName _GetIdCasosEnviados_QNAME = new QName("http://webService/", "getIdCasosEnviados");
     private final static QName _GetIdCasosEnviadosResponse_QNAME = new QName("http://webService/", "getIdCasosEnviadosResponse");
     private final static QName _GetSeguimientoDelCaso_QNAME = new QName("http://webService/", "getSeguimientoDelCaso");
-    private final static QName _EnviarCasoTriaje_QNAME = new QName("http://webService/", "enviarCasoTriaje");
     private final static QName _EnviarCasoTriajeResponse_QNAME = new QName("http://webService/", "enviarCasoTriajeResponse");
+    private final static QName _EnviarCasoTriaje_QNAME = new QName("http://webService/", "enviarCasoTriaje");
+    private final static QName _EnviarObservacionTriaje_QNAME = new QName("http://webService/", "enviarObservacionTriaje");
+    private final static QName _EnviarObservacionTriajeResponse_QNAME = new QName("http://webService/", "enviarObservacionTriajeResponse");
     private final static QName _GetIdCasoCerradoResponse_QNAME = new QName("http://webService/", "getIdCasoCerradoResponse");
     private final static QName _IfCaseSent_QNAME = new QName("http://webService/", "ifCaseSent");
     private final static QName _GetEspecialidadesResponse_QNAME = new QName("http://webService/", "getEspecialidadesResponse");
@@ -71,11 +73,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EnviarCasoTriaje }
+     * Create an instance of {@link EnviarObservacionTriaje }
      * 
      */
-    public EnviarCasoTriaje createEnviarCasoTriaje() {
-        return new EnviarCasoTriaje();
+    public EnviarObservacionTriaje createEnviarObservacionTriaje() {
+        return new EnviarObservacionTriaje();
+    }
+
+    /**
+     * Create an instance of {@link EnviarObservacionTriajeResponse }
+     * 
+     */
+    public EnviarObservacionTriajeResponse createEnviarObservacionTriajeResponse() {
+        return new EnviarObservacionTriajeResponse();
     }
 
     /**
@@ -84,6 +94,14 @@ public class ObjectFactory {
      */
     public EnviarCasoTriajeResponse createEnviarCasoTriajeResponse() {
         return new EnviarCasoTriajeResponse();
+    }
+
+    /**
+     * Create an instance of {@link EnviarCasoTriaje }
+     * 
+     */
+    public EnviarCasoTriaje createEnviarCasoTriaje() {
+        return new EnviarCasoTriaje();
     }
 
     /**
@@ -159,30 +177,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PojoArchivo }
-     * 
-     */
-    public PojoArchivo createPojoArchivo() {
-        return new PojoArchivo();
-    }
-
-    /**
-     * Create an instance of {@link PojoPaciente }
-     * 
-     */
-    public PojoPaciente createPojoPaciente() {
-        return new PojoPaciente();
-    }
-
-    /**
-     * Create an instance of {@link PojoCasoResuelto }
-     * 
-     */
-    public PojoCasoResuelto createPojoCasoResuelto() {
-        return new PojoCasoResuelto();
-    }
-
-    /**
      * Create an instance of {@link PojoMedico }
      * 
      */
@@ -191,11 +185,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PojoSeguimientoCaso }
+     * Create an instance of {@link PojoObservacion }
      * 
      */
-    public PojoSeguimientoCaso createPojoSeguimientoCaso() {
-        return new PojoSeguimientoCaso();
+    public PojoObservacion createPojoObservacion() {
+        return new PojoObservacion();
     }
 
     /**
@@ -220,6 +214,38 @@ public class ObjectFactory {
      */
     public PojoOpinion createPojoOpinion() {
         return new PojoOpinion();
+    }
+
+    /**
+     * Create an instance of {@link PojoArchivo }
+     * 
+     */
+    public PojoArchivo createPojoArchivo() {
+        return new PojoArchivo();
+    }
+
+    /**
+     * Create an instance of {@link PojoPaciente }
+     * 
+     */
+    public PojoPaciente createPojoPaciente() {
+        return new PojoPaciente();
+    }
+
+    /**
+     * Create an instance of {@link PojoCasoResuelto }
+     * 
+     */
+    public PojoCasoResuelto createPojoCasoResuelto() {
+        return new PojoCasoResuelto();
+    }
+
+    /**
+     * Create an instance of {@link PojoSeguimientoCaso }
+     * 
+     */
+    public PojoSeguimientoCaso createPojoSeguimientoCaso() {
+        return new PojoSeguimientoCaso();
     }
 
     /**
@@ -250,6 +276,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriajeResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriajeResponse")
+    public JAXBElement<EnviarCasoTriajeResponse> createEnviarCasoTriajeResponse(EnviarCasoTriajeResponse value) {
+        return new JAXBElement<EnviarCasoTriajeResponse>(_EnviarCasoTriajeResponse_QNAME, EnviarCasoTriajeResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriaje }{@code >}}
      * 
      */
@@ -259,12 +294,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarCasoTriajeResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarObservacionTriaje }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://webService/", name = "enviarCasoTriajeResponse")
-    public JAXBElement<EnviarCasoTriajeResponse> createEnviarCasoTriajeResponse(EnviarCasoTriajeResponse value) {
-        return new JAXBElement<EnviarCasoTriajeResponse>(_EnviarCasoTriajeResponse_QNAME, EnviarCasoTriajeResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://webService/", name = "enviarObservacionTriaje")
+    public JAXBElement<EnviarObservacionTriaje> createEnviarObservacionTriaje(EnviarObservacionTriaje value) {
+        return new JAXBElement<EnviarObservacionTriaje>(_EnviarObservacionTriaje_QNAME, EnviarObservacionTriaje.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviarObservacionTriajeResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webService/", name = "enviarObservacionTriajeResponse")
+    public JAXBElement<EnviarObservacionTriajeResponse> createEnviarObservacionTriajeResponse(EnviarObservacionTriajeResponse value) {
+        return new JAXBElement<EnviarObservacionTriajeResponse>(_EnviarObservacionTriajeResponse_QNAME, EnviarObservacionTriajeResponse.class, null, value);
     }
 
     /**

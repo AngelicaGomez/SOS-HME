@@ -40,6 +40,13 @@
 <div id="nivel1">
     <div id="nivel2">
         <div id="contenido">
+          
+    <g:if test="${flash.message}">
+      <div class="mensage">
+      <ul><li>  <g:message code="${flash.message}" /></li></ul>
+      </div>
+    </g:if>
+          
             <div class="form1"> 
           <table width="100%" border="0" cellpadding="0" cellspacing="0" id="listrecords" class="tabla1">
                 <tr>
@@ -60,14 +67,17 @@
                   thisArchivos = thisCasoMostrado.archivos
                   thisDoctor = thisCasoMostrado.opiniones.medicoOpinion
                   %>
-                    <td style="width:60px;">${thisCasoMostrado.idCasoSOS}</td>
+                    <!--<td style="width:60px;">${thisCasoMostrado.idCasoSOS}</td>-->
+    
+                    <td style="width:60px;"><g:link controller="triaje" action="previewEnvioObservacionCaso" id="${thisCasoMostrado.idCasoSOS}">${thisCasoMostrado.idCasoSOS}</g:link></td>                    
                     
-                    <td style="width:340px;" class="pJustifica"><g:encodeAs codec="NL2BR">
-                        <g:each in="${thisCasoMostrado?.opiniones}" var="opiniones">                                  
-                          ${opiniones.cuerpoOpinion} <br/>                       
+                    <td style="width:340px;" class="pJustifica"><g:encodeAs codec="NL2BR">                      
+                        <g:each in="${thisCasoMostrado?.opiniones}" var="opiniones">  
+                          Segunda Opinion en Salud: 
+                          ${opiniones.cuerpoOpinion}<br/>                     
                           Fecha de emisión: ${opiniones.fechaOpinion} <br/>
                           Médico responsable: ${opiniones.medicoOpinion.nombre} ${opiniones.medicoOpinion.apellido}
-                     
+                           
                         </g:each>    
                     </g:encodeAs></td>                    
                         
@@ -79,7 +89,7 @@
                     </td>                     
 
                 </tr>
-                <tr><td><br/></td></tr>
+                <!--<tr><td><br/></td></tr>-->
             </g:each>
             </table>   
 

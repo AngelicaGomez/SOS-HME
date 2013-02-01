@@ -1,0 +1,367 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ServicioWebTriajeService" targetNamespace="http://webService/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webService/" xmlns:tns="http://webService/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="pojoSeguimientoCaso">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoSOS" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="opiniones" nillable="true" type="tns:pojoOpinion"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="archivos" nillable="true" type="tns:pojoArchivo"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoOpinion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cuerpoOpinion" type="xs:string"/>
+      <xs:element minOccurs="0" name="fechaOpinion" type="xs:string"/>
+      <xs:element minOccurs="0" name="medicoOpinion" type="tns:pojoMedico"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoMedico">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="apellido" type="xs:string"/>
+      <xs:element minOccurs="0" name="colegioDeMedico" type="xs:int"/>
+      <xs:element minOccurs="0" name="ministerioDeSalud" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoArchivo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+      <xs:element minOccurs="0" name="adjunto" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoCasoResuelto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoSOS" type="xs:string"/>
+      <xs:element minOccurs="0" name="responsable" type="tns:pojoMedico"/>
+      <xs:element minOccurs="0" name="opinion" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="archivos" nillable="true" type="tns:pojoArchivo"/>
+      <xs:element minOccurs="0" name="fechaSolucion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoObservacion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoObservacion" type="xs:string"/>
+      <xs:element minOccurs="0" name="observacion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoCaso">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoSOS" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="archivos" nillable="true" type="tns:pojoArchivo"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="especialidad" nillable="true" type="tns:pojoEspecialidad"/>
+      <xs:element minOccurs="0" name="paciente" type="tns:pojoPaciente"/>
+      <xs:element minOccurs="0" name="descripcion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoEspecialidad">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pojoPaciente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="nombre" type="xs:string"/>
+      <xs:element minOccurs="0" name="apellido" type="xs:string"/>
+      <xs:element minOccurs="0" name="cedula" type="xs:string"/>
+      <xs:element minOccurs="0" name="sexo" type="xs:string"/>
+      <xs:element minOccurs="0" name="nacionalidad" type="xs:string"/>
+      <xs:element minOccurs="0" name="fechaNacimiento" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ifCaseSent" type="tns:ifCaseSent"/>
+  <xs:complexType name="ifCaseSent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoSOS" type="xs:string"/>
+      <xs:element minOccurs="0" name="uuid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ifCaseSentResponse" type="tns:ifCaseSentResponse"/>
+  <xs:complexType name="ifCaseSentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getSeguimientoDelCaso" type="tns:getSeguimientoDelCaso"/>
+  <xs:complexType name="getSeguimientoDelCaso">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoSOS" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getSeguimientoDelCasoResponse" type="tns:getSeguimientoDelCasoResponse"/>
+  <xs:complexType name="getSeguimientoDelCasoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:pojoSeguimientoCaso"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getIdCasosEnviados" type="tns:getIdCasosEnviados"/>
+  <xs:complexType name="getIdCasosEnviados">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="uuid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getIdCasosEnviadosResponse" type="tns:getIdCasosEnviadosResponse"/>
+  <xs:complexType name="getIdCasosEnviadosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getIdCasoCerrado" type="tns:getIdCasoCerrado"/>
+  <xs:complexType name="getIdCasoCerrado">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="uuid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getIdCasoCerradoResponse" type="tns:getIdCasoCerradoResponse"/>
+  <xs:complexType name="getIdCasoCerradoResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getCasoResuelto" type="tns:getCasoResuelto"/>
+  <xs:complexType name="getCasoResuelto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idCasoSOS" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getCasoResueltoResponse" type="tns:getCasoResueltoResponse"/>
+  <xs:complexType name="getCasoResueltoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:pojoCasoResuelto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="enviarObservacionTriaje" type="tns:enviarObservacionTriaje"/>
+  <xs:complexType name="enviarObservacionTriaje">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="observacion" type="tns:pojoObservacion"/>
+      <xs:element minOccurs="0" name="uuid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="enviarObservacionTriajeResponse" type="tns:enviarObservacionTriajeResponse"/>
+  <xs:complexType name="enviarObservacionTriajeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="enviarCasoTriaje" type="tns:enviarCasoTriaje"/>
+  <xs:complexType name="enviarCasoTriaje">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="caso" type="tns:pojoCaso"/>
+      <xs:element minOccurs="0" name="uuid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="enviarCasoTriajeResponse" type="tns:enviarCasoTriajeResponse"/>
+  <xs:complexType name="enviarCasoTriajeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getEspecialidades" type="tns:getEspecialidades"/>
+  <xs:complexType name="getEspecialidades">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="uuid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="getEspecialidadesResponse" type="tns:getEspecialidadesResponse"/>
+  <xs:complexType name="getEspecialidadesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getIdCasosEnviados">
+    <wsdl:part element="tns:getIdCasosEnviados" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getIdCasosEnviadosResponse">
+    <wsdl:part element="tns:getIdCasosEnviadosResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSeguimientoDelCaso">
+    <wsdl:part element="tns:getSeguimientoDelCaso" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enviarCasoTriajeResponse">
+    <wsdl:part element="tns:enviarCasoTriajeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enviarCasoTriaje">
+    <wsdl:part element="tns:enviarCasoTriaje" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enviarObservacionTriaje">
+    <wsdl:part element="tns:enviarObservacionTriaje" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enviarObservacionTriajeResponse">
+    <wsdl:part element="tns:enviarObservacionTriajeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getIdCasoCerradoResponse">
+    <wsdl:part element="tns:getIdCasoCerradoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ifCaseSent">
+    <wsdl:part element="tns:ifCaseSent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEspecialidadesResponse">
+    <wsdl:part element="tns:getEspecialidadesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getIdCasoCerrado">
+    <wsdl:part element="tns:getIdCasoCerrado" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ifCaseSentResponse">
+    <wsdl:part element="tns:ifCaseSentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEspecialidades">
+    <wsdl:part element="tns:getEspecialidades" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCasoResuelto">
+    <wsdl:part element="tns:getCasoResuelto" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSeguimientoDelCasoResponse">
+    <wsdl:part element="tns:getSeguimientoDelCasoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCasoResueltoResponse">
+    <wsdl:part element="tns:getCasoResueltoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ServicioWebTriajeServicePortType">
+    <wsdl:operation name="ifCaseSent">
+      <wsdl:input message="tns:ifCaseSent" name="ifCaseSent">
+    </wsdl:input>
+      <wsdl:output message="tns:ifCaseSentResponse" name="ifCaseSentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSeguimientoDelCaso">
+      <wsdl:input message="tns:getSeguimientoDelCaso" name="getSeguimientoDelCaso">
+    </wsdl:input>
+      <wsdl:output message="tns:getSeguimientoDelCasoResponse" name="getSeguimientoDelCasoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIdCasosEnviados">
+      <wsdl:input message="tns:getIdCasosEnviados" name="getIdCasosEnviados">
+    </wsdl:input>
+      <wsdl:output message="tns:getIdCasosEnviadosResponse" name="getIdCasosEnviadosResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIdCasoCerrado">
+      <wsdl:input message="tns:getIdCasoCerrado" name="getIdCasoCerrado">
+    </wsdl:input>
+      <wsdl:output message="tns:getIdCasoCerradoResponse" name="getIdCasoCerradoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCasoResuelto">
+      <wsdl:input message="tns:getCasoResuelto" name="getCasoResuelto">
+    </wsdl:input>
+      <wsdl:output message="tns:getCasoResueltoResponse" name="getCasoResueltoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="enviarObservacionTriaje">
+      <wsdl:input message="tns:enviarObservacionTriaje" name="enviarObservacionTriaje">
+    </wsdl:input>
+      <wsdl:output message="tns:enviarObservacionTriajeResponse" name="enviarObservacionTriajeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="enviarCasoTriaje">
+      <wsdl:input message="tns:enviarCasoTriaje" name="enviarCasoTriaje">
+    </wsdl:input>
+      <wsdl:output message="tns:enviarCasoTriajeResponse" name="enviarCasoTriajeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEspecialidades">
+      <wsdl:input message="tns:getEspecialidades" name="getEspecialidades">
+    </wsdl:input>
+      <wsdl:output message="tns:getEspecialidadesResponse" name="getEspecialidadesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicioWebTriajeServiceSoapBinding" type="tns:ServicioWebTriajeServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ifCaseSent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="ifCaseSent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ifCaseSentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIdCasosEnviados">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getIdCasosEnviados">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getIdCasosEnviadosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSeguimientoDelCaso">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getSeguimientoDelCaso">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSeguimientoDelCasoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIdCasoCerrado">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getIdCasoCerrado">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getIdCasoCerradoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="enviarCasoTriaje">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enviarCasoTriaje">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="enviarCasoTriajeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="enviarObservacionTriaje">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enviarObservacionTriaje">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="enviarObservacionTriajeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCasoResuelto">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCasoResuelto">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCasoResueltoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEspecialidades">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getEspecialidades">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getEspecialidadesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServicioWebTriajeService">
+    <wsdl:port binding="tns:ServicioWebTriajeServiceSoapBinding" name="ServicioWebTriajeServicePort">
+      <soap:address location="http://localhost:8080/SOS-TRIAJE/services/servicioWebTriaje"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

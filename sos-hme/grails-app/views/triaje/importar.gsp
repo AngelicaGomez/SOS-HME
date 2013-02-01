@@ -35,8 +35,9 @@
         <g:hiddenField name="episodioId" value="${episodioId}" />
 
 	<div class="fakefile">
-          <input class="tamanio"/> 
-                <img src="${resource(dir:'images',file:'icono-buscar.png')}"/>
+         
+                <img src="${resource(dir:'images',file:'busqueda.PNG')}"/>
+                
 	</div>
         <g:each in="${nomArchivo}" var="archivo">
             <p>${archivo}</p>

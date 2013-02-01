@@ -204,7 +204,7 @@ environments {
 }
 
 //Uuid del centro en SOS-TRIAJE
-centroSOS.id = "ab28c17f-99a1-44e1-87f2-8ff06be1fd01"
+centroSOS.id = "e6878b0f-1803-4ca3-b676-ec7258362383"
 
 //Indice Maestro de Pacientes
 //UCV CAIBCO 
@@ -225,7 +225,7 @@ cxf {
             serviceEndpointAddress = "${service.soshme.url.imp}"
         }
         customSecureServiceClientTriaje {
-            wsdl = "docs/servicioWebTriaje23.wsdl" //only used for wsdl2java script target
+            wsdl = "docs/servicioWebTriaje24.wsdl" //only used for wsdl2java script target
             //wsdlArgs = ['-autoNameResolution', '-validate']
             namespace = "webService"
             //client = false //defaults to false

@@ -44,8 +44,9 @@
         </g:each>        
   </div>  
 <br/><br/>
-<g:submitButton name="importar" value="Importar" class="boton_submit2"/>
-<g:link controller="triaje" action="previewEnviarCaso" class="boton_submit2"><g:message code="Siguiente"  /></g:link>               
+<g:submitButton name="importar" value="Importar" class="boton_submit3"/>
+<g:link controller="triaje" action="previewEnviarCaso" class="boton_submit3"><g:message code="Siguiente"  /></g:link>               
+<g:link controller="records" action="list" class="boton_submit3"><g:message code="Atras"  /></g:link>   
 </g:form>   
   
 </div></div></div></div>  

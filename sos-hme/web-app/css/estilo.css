@@ -804,7 +804,24 @@ label#errorms {
         margin-right: -100px;
         margin-bottom:0px; 
 	} 
-        
+.form2 .boton_submit3 {
+		display:inline-block;
+		font-size:14px;
+		color:#3f3f3f;
+	padding: 7px 15px;
+	background:#f5cb59 url(../images/bkg_boton1.gif) repeat-x;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4e2b3), to(#f5c645));
+    background-image: -webkit-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -moz-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -ms-linear-gradient(top, #f4e2b3, #f5c645);
+    background-image: -o-linear-gradient(top, #f4e2b3, #f5c645);
+	color:#3f3f3f;
+	border:solid 1px #dddddd;
+	text-decoration:none;
+	margin-left: 6px;
+        margin-right: 0px;
+        margin-bottom:0px; 
+	}        
 /*############################################################################*/
 
 div.fileinputs {
@@ -851,28 +868,28 @@ text-align: justify;
 }
 
 /*############################################################################*/
-.form1 {
+.form3 {
 	}
-.form1 label {
+.form3 label {
 	display:inline-block;
 	width:200px;
 	padding-left:100px;
 	}
-.form1 textarea {
+.form3 textarea {
 	width:300px;
 	height:80px;
 	margin-top:2px;
 	padding:20px;
 	}
-.form1 p:nth-child(odd) {
+.form3 p:nth-child(odd) {
 	background-color:#f7f7f7;
 	}
-.form1 p:last-child {
+.form3 p:last-child {
 	background-color:#FFF;}
-.form1 p {
+.form3 p {
 	padding:10px 0;
 	margin:0;}
-.form1 input, .form1 select {
+.form3 input, .form3 select {
 	color:#8f8f8f;
 	padding:2px 2px 2px 8px;}
 

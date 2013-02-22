@@ -101,7 +101,6 @@ class TriajeController {
 
                     this.thisArchivosSeguimiento = thisCasoSeguimiento.archivos                   
                     
-//                    println "thisArchivos adjunto "+thisArchivos.adjunto
                         if (thisArchivosSeguimiento){
                             int j=0;
                             while (j< thisArchivosSeguimiento.size())
@@ -112,9 +111,6 @@ class TriajeController {
                         }                
                 
                     casosParaMostrarSeguimiento.add(thisCasoSeguimiento)
-//                    println "this caso seguimiento: "+thisCasoSeguimiento
-                    
-//                    println "this opiniones del seguimeinto: "+thisOpinionesSeguimiento.cuerpoOpinion
                     
                     render(view: "viewSeguimientoCaso", model: [casoInstanceList: casosTratados, caso:thisCasoSeguimiento, casoMostrado:casosParaMostrarSeguimiento, archivos:thisArchivosSeguimiento, opiniones: thisOpinionesSeguimiento]) 
                 } 
